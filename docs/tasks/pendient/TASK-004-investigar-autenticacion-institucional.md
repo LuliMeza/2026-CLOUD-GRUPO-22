@@ -10,9 +10,20 @@ El sistema requiere que los usuarios se identifiquen con sus correos institucion
 (`@alu.frlp.utn.edu.ar` para estudiantes y `@frlp.utn.edu.ar` para docentes) para acceder a las
 funciones de comentarios y visualización de cátedras/comisiones.
 
-La facultad no expone (ni requiere) una API interna (como SIU Guaraní) para validar alumnos. El
-acceso activo al buzón de correo institucional es la prueba estándar de pertenencia a la
-universidad.
+Esta tarea parte de **Spike 2 — Validación de identidad UTN vía mail institucional** (Trello,
+`2026-UTN-Cloud`), no la reemplaza. Spike 2 ya cubre la pregunta de si el dominio `.frlp` es
+exclusivo de la facultad y qué patrón de verificación de mail usar (token/OTP) — esa
+investigación sigue siendo la fuente para esa parte, y no se repite acá.
+
+Lo que agrega esta tarea es una capa arriba de esa pregunta: **decidir la estrategia de
+autenticación completa** (Alternativa A o B más abajo), porque esa decisión cambia cuánto de
+Spike 2 hace falta implementar:
+
+- Si se elige **Alternativa A (Google OAuth)**, Google gestiona la verificación de la cuenta —
+  gran parte del DoR de Spike 2 (patrón de verificación por mail, elección de proveedor de
+  mailing) deja de ser necesario, y solo queda vigente la validación de dominio institucional.
+- Si se elige **Alternativa B (Neon Auth con contraseña)**, sí hace falta completar Spike 2 tal
+  como está planteada: mecanismo de verificación de mail y elección de proveedor.
 
 Esta tarea tiene como propósito que cualquier integrante del equipo pueda retomar el análisis y
 decidir el camino técnico a implementar para la autenticación, la verificación del correo y la
@@ -59,9 +70,10 @@ recuperación de contraseñas.
 
 - [ ] Presentar ambas alternativas al equipo y/o docente para definir la preferencia.
 - [ ] Si se elige la Alternativa A (Google OAuth): definir si se implementa mediante Passport en
-      NestJS o mediante Neon Auth.
-- [ ] Si se elige la Alternativa B (Neon Auth con contraseñas): registrar una cuenta gratuita en
-      Resend y configurar las claves API en Neon.
+      NestJS o mediante Neon Auth. Cerrar/reducir Spike 2 a solo la validación de dominio.
+- [ ] Si se elige la Alternativa B (Neon Auth con contraseñas): retomar Spike 2 para el mecanismo
+      de verificación de mail (token/OTP) y la elección de proveedor, registrar una cuenta
+      gratuita en Resend y configurar las claves API en Neon.
 - [ ] Redactar el TDD correspondiente (`TDD-AUTH-H1.md`) con el modelo de dominio `User` para Prisma.
 - [ ] Definir los roles (alumno, docente, moderador) y la regla de validación de dominios permitidos.
 
