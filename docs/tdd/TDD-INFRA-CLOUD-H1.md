@@ -48,9 +48,36 @@ PostgreSQL con Prisma) y preservando el entorno de desarrollo local con Docker C
 
 ## 2. Diseño Técnico (el "Cómo")
 
-### 2.1. Topología de Infraestructura
+### 2.1. Modelo de Dominio (Entidad)
 
-La arquitectura de producción separa las tres capas en proveedores especializados:
+No se define un modelo de dominio en este hito — es una decisión de infraestructura de despliegue,
+no de dominio de negocio. El modelo de dominio sigue siendo el que define (o todavía no define)
+cada TDD funcional.
+
+### 2.2. Contrato de API
+
+No se agregan endpoints nuevos en este hito. Se reutiliza el contrato ya definido en
+`TDD-STACK-H1.md` (`GET /health`) como verificación de que el backend desplegado en Render responde
+y es alcanzable desde el frontend en Vercel.
+
+### 2.3. Esquema de Persistencia
+
+Sin cambios respecto a `TDD-STACK-H1.md`: PostgreSQL administrado por Prisma ORM. Este hito solo
+cambia dónde corre la base de datos (Neon en la nube en vez del contenedor local), no su esquema ni
+el adapter (`@prisma/adapter-pg`).
+
+**Por qué elegimos este camino y no otro:**
+
+* **¿Por qué Neon para la Base de Datos?** Render ofrece bases de datos PostgreSQL en su plan
+  gratis pero expiran a los 30 días. Neon ofrece un nivel gratuito permanente para bases de datos
+  PostgreSQL, con alta disponibilidad, consola web y compatibilidad completa con Prisma.
+
+## 3. Arquitectura y Flujo
+
+### 3.1. Definición del Puerto (Repository Interface)
+
+No aplica un puerto de repositorio de dominio en este hito. Los componentes de sistema involucrados
+son tres proveedores especializados:
 
 ```
 [ Navegador del Usuario ]
@@ -72,10 +99,17 @@ La arquitectura de producción separa las tres capas en proveedores especializad
 3. **Base de Datos (Neon):** Aloja PostgreSQL en un esquema Serverless en la nube, con soporte
    nativo para SSL y compatible con `@prisma/adapter-pg`.
 
-### 2.2. Configuración de Entornos y Variables
+### 3.2. Lógica del Caso de Uso
 
-El acoplamiento entre servicios se resuelve exclusivamente mediante variables de entorno en tiempo
-de ejecución:
+1. Un commit se integra en `main`.
+2. Vercel detecta el push y compila el workspace `front/`.
+3. Render detecta el push, compila y levanta el workspace `back/`, escuchando en el puerto asignado
+   por la variable `PORT`.
+4. El backend se conecta a Neon mediante `DATABASE_URL` (con `sslmode=require`).
+5. El frontend consulta al backend mediante `NEXT_PUBLIC_API_URL`; `GET /health` confirma que ambos
+   servicios están arriba y comunicados.
+
+**Configuración de Entornos y Variables:**
 
 | Servicio | Variable | Propósito | Ejemplo en Producción |
 |---|---|---|---|
@@ -83,18 +117,14 @@ de ejecución:
 | **Render (Back)** | `PORT` | Puerto asignado por Render para escuchar HTTP | Asignado automáticamente por Render |
 | **Vercel (Front)** | `NEXT_PUBLIC_API_URL` | URL pública del backend en Render | `https://utn-back.onrender.com` |
 
-### 2.3. Justificación de Alternativas Evaluadas
+**Por qué elegimos este camino y no otro:**
 
 * **¿Por qué Render para el Backend en vez de Vercel?**
   NestJS es un framework diseñado para correr como un proceso persistente (`app.listen(port)`).
   Vercel fuerza un modelo Serverless donde cada endpoint es una función efímera. Adaptar NestJS a
   Serverless en Vercel requiere bibliotecas de emulación, introduce límites estrictos de tiempo de
   ejecución y complica el pool de conexiones con PostgreSQL. Render corre el código tal cual está en
-  [back/package.json](file:///c:/Users/Lucia/OneDrive/Documentos/Proyectos/Universidad/cloud-2026/back/package.json) sin tocar una sola línea.
-* **¿Por qué Neon para la Base de Datos?**
-  Render ofrece bases de datos PostgreSQL en su plan gratis pero expiran a los 30 días. Neon ofrece
-  un nivel gratuito permanente para bases de datos PostgreSQL, con alta disponibilidad, consola web
-  y compatibilidad completa con Prisma.
+  [back/package.json](../../back/package.json) sin tocar una sola línea.
 * **¿Por qué no usar Docker en Producción para este hito?**
   Alojar contenedores Docker propios en la nube requiere configurar máquinas virtuales (ej. EC2,
   Droplets) o clústeres que exceden el presupuesto (no gratuitos) o agregan sobrecarga de
@@ -102,19 +132,28 @@ de ejecución:
 
 ---
 
-## 3. Casos de Borde y Mitigaciones
+## 4. Casos de Borde y Manejo de Errores
 
-| Escenario de Error / Riesgo | Causa Raíz | Mitigación Técnica |
+Precondiciones: `DATABASE_URL` con `sslmode=require` configurado en Render, `NEXT_PUBLIC_API_URL`
+configurado en Vercel apuntando al backend desplegado.
+
+| Escenario de Error | Validación / Regla de Negocio | Código HTTP |
 |---|---|---|
-| **Cold Start de Render** | El plan gratuito de Render suspende el contenedor tras 15 minutos sin tráfico. | Documentar el comportamiento para los evaluadores. Diseñar en el frontend un indicador de carga o reintento si la primera petición demora hasta 50 segundos. |
-| **Bloqueo por CORS** | El frontend (`*.vercel.app`) y el backend (`*.onrender.com`) operan en dominios distintos. | Habilitar CORS en NestJS (`app.enableCors()`) permitiendo el origen del frontend desplegado. |
-| **Fallo de SSL en Neon** | Neon exige conexiones seguras TLS/SSL. | Incluir `?sslmode=require` en el `DATABASE_URL` inyectado en Render. |
+| Cold Start de Render | El plan gratuito suspende el contenedor tras 15 minutos sin tráfico; la primera petición lo reactiva. | N/A — no es un error, es latencia de arranque en frío (~30-50s) antes de responder 200. |
+| Bloqueo por CORS | Frontend (`*.vercel.app`) y backend (`*.onrender.com`) en dominios distintos; falta habilitar CORS en NestJS (`app.enableCors()`). | N/A — el navegador bloquea la respuesta antes de exponer un código de estado utilizable. |
+| Fallo de SSL en Neon | Neon exige conexión TLS/SSL; falta `sslmode=require` en `DATABASE_URL`. | N/A — falla la conexión TCP/SSL antes de que exista una respuesta HTTP. |
 
 ---
 
-## 4. Observaciones para la Implementación
+## 5. Observaciones Adicionales
 
-- El repositorio continuará utilizando npm workspaces con el archivo raíz [package.json](file:///c:/Users/Lucia/OneDrive/Documentos/Proyectos/Universidad/cloud-2026/package.json).
-- En Render, el *Root Directory* se configurará en la raíz o en `back/`, utilizando los comandos de
-  build y start correspondientes al workspace.
-- En Vercel, el *Root Directory* se configurará apuntando a `front/`.
+- **Preguntas abiertas:**
+  - Confirmar compatibilidad de esta infraestructura con las decisiones todavía pendientes de
+    Spike 2 (proveedor de verificación de mail) y Spike 3 (proveedor de IA para moderación) — por
+    ejemplo, si el proveedor de IA elegido necesita límites de red/salida distintos en Render.
+- **Detalles técnicos adicionales:**
+  - El repositorio continuará utilizando npm workspaces con el archivo raíz
+    [package.json](../../package.json).
+  - En Render, el *Root Directory* se configurará en la raíz o en `back/`, utilizando los comandos
+    de build y start correspondientes al workspace.
+  - En Vercel, el *Root Directory* se configurará apuntando a `front/`.
