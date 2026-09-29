@@ -13,12 +13,21 @@ Referencia técnica completa: [TDD-INFRA-CLOUD-H1](../tdd/TDD-INFRA-CLOUD-H1.md)
 Diagrama editable en FigJam: [https://www.figma.com/board/plHl5Sj8IOFzbWvf3vIq2P](https://www.figma.com/board/plHl5Sj8IOFzbWvf3vIq2P)
 
 
-| Componente                      | Proveedor   | Rol                                                  |
-| ------------------------------- | ----------- | ---------------------------------------------------- |
-| Frontend Next.js                | Vercel      | Aloja y sirve la aplicación web (Edge Network)       |
-| Backend NestJS                  | Render      | Web Service Node.js, proceso persistente             |
-| PostgreSQL                      | Neon        | Base de datos administrada, capa gratuita permanente |
-| IA de Moderación de Comentarios | *A definir* | **Variable pendiente** — ver sección 4               |
+| Componente                               | Proveedor         | Rol                                                              |
+| ----------------------------------------- | ----------------- | ----------------------------------------------------------------- |
+| Frontend Next.js                          | Vercel            | Aloja y sirve la aplicación web (Edge Network)                   |
+| Backend NestJS                            | Render            | Web Service Node.js, proceso persistente                        |
+| Lambda: Generación de Embeddings          | AWS *(TBD)*       | Genera embeddings para el agente RAG sobre PDFs                 |
+| PostgreSQL + pgvector                     | Neon              | Base de datos administrada y motor de búsqueda vectorial        |
+| Storage de PDFs                           | *A definir*       | Almacena el material subido (apuntes, exámenes, cronogramas)    |
+| IA Moderación de Tono                     | Comprehend *(TBD)*| Modera comentarios antes de publicarse                          |
+| IA Mejora de Redacción                    | *A definir*       | Sugiere mejoras de redacción al usuario                         |
+| IA Resumen Inteligente por Cuatrimestre   | *A definir*       | Resumen agregado para el rol Jefe Departamental                 |
+| IA Agente RAG sobre PDFs                  | *A definir*       | Responde consultas sobre el material subido                     |
+
+Todos los renglones de IA, el worker de embeddings y el storage de PDFs son **variables
+pendientes** — ver sección 4. El diagrama distingue además dos puntos de entrada del cliente:
+Alumno y Jefe Departamental/Admin (sin perfil ni vista de profesor).
 
 
 ## 2. Setup de Infraestructura
@@ -57,29 +66,36 @@ excede el presupuesto gratuito del proyecto académico.
 
 ## 3. Repositorio Inicial con Actividad
 
-- Repositorio: [github.com/Tiaguito-dev/2026-UTN-GRUPO-01](https://github.com/Tiaguito-dev/2026-UTN-GRUPO-01)
-- Rama de integración: `desarrollo` · Rama estable: `main` (ver
-[git-workflow.md](../standards/git-workflow.md))
-- Primer commit: 2026-09-14 · Estado a la fecha de este documento: 14 commits, 4 pull requests
-mergeados (#1 a #9), 4 colaboradores activos
+- Repositorio: [github.com/LuliMeza/2026-CLOUD-GRUPO-22](https://github.com/LuliMeza/2026-CLOUD-GRUPO-22)
+  — fork de [2026-UTN-GRUPO-01](https://github.com/Tiaguito-dev/2026-UTN-GRUPO-01) (Metodologías
+  Ágiles), continuado por separado para Desarrollo Cloud, Grupo 22.
+- Rama: `main` (ver [git-workflow.md](../standards/git-workflow.md))
+- Historial heredado del fork desde el primer commit (2026-09-14); 16 commits a la fecha de este
+  documento, sin actividad propia nueva todavía más allá del punto de fork
 - Estructura: npm workspaces (`front/`, `back/`), Docker Compose para PostgreSQL local, Node.js
 22.22.3 + TypeScript, NestJS + Next.js + Prisma (ver
 [TDD-STACK-H1](../tdd/TDD-STACK-H1.md) y [TASK-001](../tasks/finished/TASK-001-formalizar-stack-inicial.md))
 
-## 4. Variable Pendiente: IA de Moderación de Comentarios
+## 4. Variables Pendientes: Capacidades de IA
 
-**No forma parte del MVP actual.** El proveedor/modelo de IA para moderar comentarios (y
-opcionalmente sugerir mejoras de redacción) todavía está en investigación — tarea que fusiona lo
-que era el Spike 6 (ahora archivado). En el diagrama de la sección 1 aparece como nodo externo
-conectado con línea punteada al backend, señalando que es una integración futura y no un
-componente activo de la arquitectura actual.
+**Ninguna forma parte del MVP actual.** Son variables en investigación, marcadas como pendientes
+en el diagrama de la sección 1 (nodos externos conectados con línea punteada al backend):
 
-Alcance de la investigación pendiente:
+- **Moderación de tono** — analiza comentarios antes de publicarse (candidato: Amazon Comprehend).
+  Fusiona lo que era el Spike 6 (ahora archivado).
+- **Mejora de redacción** — sugiere una redacción alternativa sin cambiar el contenido ni la
+  opinión del usuario.
+- **Resumen inteligente por cuatrimestre** — agrega el estado de una comisión para el rol Jefe
+  Departamental.
+- **Agente RAG sobre PDFs** — responde consultas sobre el material subido (apuntes, exámenes)
+  usando el pipeline de embeddings (S3/Storage → Lambda → pgvector en Neon).
+
+Alcance de la investigación pendiente (aplica a moderación de tono y mejora de redacción):
 
 - Definir si el objetivo es solo moderación (bloquear/filtrar) o también sugerencia activa de
 mejora de redacción.
 - Comparar opciones (OpenAI, modelos open source, DeepSeek, Gemini para estudiantes, Amazon
-Textract u equivalente para análisis de sentimiento/tono) por costo, latencia, precisión en
+Comprehend u equivalente para análisis de sentimiento/tono) por costo, latencia, precisión en
 español, facilidad de integración y privacidad de datos (¿pueden enviarse comentarios de
 alumnos a un servicio externo?).
 - Definir reglas de negocio de bloqueo (insultos, datos personales, discurso de odio, spam) vs.
@@ -89,4 +105,4 @@ sugerencia (tono, claridad).
 
 Entregable esperado de esa investigación: documento de comparativa, POC con resultados, decisión
 final y criterios de moderación definidos. Hasta que esa decisión exista, este documento no fija
-proveedor ni costo asociado a esa pieza.
+proveedor ni costo asociado a ninguna de estas cuatro piezas.
