@@ -8,7 +8,7 @@ Fecha: 2026-09-27
 Refinar y auditar el tablero Trello `2026-UTN-Cloud` (Gemelo Digital) con el agente PO —
 estructura de tarjetas (DoD/DoR), criterio de prioridad, mantenimiento de Historias de Usuario y
 organización de listas — como paso previo a trasladar los cambios al tablero real del equipo
-(`2026-UTN-Grupo-1`), que por permisos de workspace no se pudo tocar directamente.
+(`2026-UTN-Cloud`), que por permisos de workspace no se pudo tocar directamente.
 
 ## Contexto
 
@@ -59,6 +59,6 @@ real queda pendiente, con dos caminos posibles:
 
 El tablero `2026-UTN-Cloud` (Gemelo Digital) quedó refinado, auditado y documentado — sirve de
 referencia para replicar manualmente los cambios sobre el tablero real del equipo
-(`2026-UTN-Grupo-1`) una vez resuelto el acceso al workspace, o para migrar el equipo al Gemelo
+(`2026-UTN-Cloud`) una vez resuelto el acceso al workspace, o para migrar el equipo al Gemelo
 Digital si esa resulta la vía elegida. Pendiente explícito: nada de esto se sincronizó todavía al
 tablero real.

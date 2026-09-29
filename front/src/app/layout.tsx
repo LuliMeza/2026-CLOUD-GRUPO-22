@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "UTN Grupo 01",
-  description: "Aplicación del proyecto 2026 UTN Grupo 01",
+  title: "Cloud Grupo 22",
+  description: "Aplicación del proyecto 2026 Cloud Grupo 22",
 };
 
 interface RootLayoutProps {

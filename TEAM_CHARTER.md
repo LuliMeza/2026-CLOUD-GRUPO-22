@@ -8,7 +8,9 @@ Brindar transparencia al colectivo estudiantil por parte de sus pares, para que 
 
 | Nombre | Rol | Responsabilidades |
 |---|---|---|
-| | | |
+| Tiago Solís | Desarrollador | _a definir_ |
+| Lucía Meza | Desarrollador | _a definir_ |
+| César Huari | Desarrollador | _a definir_ |
 
 ## Acuerdos de Trabajo
 

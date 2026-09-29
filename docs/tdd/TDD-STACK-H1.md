@@ -1,7 +1,7 @@
 # TDD-STACK-H1: Stack tecnológico inicial
 
 Estado: Aprobado
-Autor: Equipo 2026 UTN Grupo 01
+Autor: Equipo 2026 Cloud Grupo 22 (Tiago Solís, Lucía Meza, César Huari)
 Fecha: 2026-09-24
 
 ## 1. Contexto de Negocio (el "Qué")

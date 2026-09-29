@@ -1,7 +1,7 @@
 # TDD-INFRA-CLOUD-H1: Despliegue en la nube del MVP (Vercel, Render y Neon)
 
 Estado: Aprobado
-Autor: Equipo 2026 UTN Grupo 01
+Autor: Equipo 2026 Cloud Grupo 22 (Tiago Solís, Lucía Meza, César Huari)
 Fecha: 2026-09-27
 
 ## 1. Contexto de Negocio (el "Qué")
