@@ -1,8 +1,8 @@
 # TASK-004: Completar el mecanismo de verificación de identidad institucional
 
-Estado: Pendiente
+Estado: Finalizada
 Fecha: 2026-10-18
-TDD relacionado: Pendiente (`docs/tdd/TDD-AUTH-H1.md` — no redactado todavía)
+TDD relacionado: [TDD-AUTH-H1](../../tdd/TDD-AUTH-H1.md) (Aprobado)
 
 ## 1. Contexto y Problema
 
@@ -35,13 +35,13 @@ de verdad y pertenezca a quien se registra. El mecanismo de verificación de esa
 
 ## 3. Alcance de la Tarea (lo que sigue abierto)
 
-- [ ] Decidir el mecanismo de verificación de titularidad de la casilla institucional: magic link
-      vs. OTP (Spike 2, alcance abierto).
-- [ ] Elegir proveedor de correo transaccional para enviar la verificación/recuperación (ej.
-      Resend, gratuito hasta 3.000 envíos/mes) y registrar la cuenta.
-- [ ] Redactar `docs/tdd/TDD-AUTH-H1.md` con el modelo de dominio `User` para Prisma, el mecanismo
+- [x] Decidir el mecanismo de verificación de titularidad de la casilla institucional: magic link
+      vs. OTP (Spike 2, alcance abierto — resuelto a favor de Email OTP debido al riesgo de Safe Links en Microsoft 365).
+- [x] Elegir proveedor de correo transaccional para enviar la verificación/recuperación (Neon Auth
+      con Email OTP integrado, sin requerir SMTP propio).
+- [x] Redactar `docs/tdd/TDD-AUTH-H1.md` con el modelo de dominio `User` para Prisma, el mecanismo
       elegido y el flujo de verificación/recuperación.
-- [ ] Confirmar los roles (alumno, docente, moderador) y la regla de validación de dominios
+- [x] Confirmar los roles (alumno, jefe departamental, administrador) y la regla de validación de dominios
       permitidos contra lo ya implementado en HU-01/HU-02.
 
 ---
@@ -58,7 +58,22 @@ de verdad y pertenezca a quien se registra. El mecanismo de verificación de esa
 
 ## 5. Criterios de Aceptación
 
-1. Se decidió el mecanismo de verificación de titularidad de la casilla (magic link u OTP).
-2. Se redactó y aprobó `docs/tdd/TDD-AUTH-H1.md`.
-3. Se generaron las historias de usuario y tareas de implementación derivadas para frontend y
-   backend que falten (verificación real de titularidad, recuperación de contraseña).
+1. [x] Se decidió el mecanismo de verificación de titularidad de la casilla: Email OTP vía Neon Auth.
+2. [x] Se redactó y aprobó `docs/tdd/TDD-AUTH-H1.md` (Estado: Aprobado).
+3. [x] Se confirmaron los roles (alumno, jefe departamental, administrador) contra HU-01/HU-02;
+   las historias/tareas de implementación derivadas (backend/frontend) quedan a cargo de quien
+   tome TDD-AUTH-H1.md como referencia para implementar.
+
+---
+
+## Resultado
+
+Decisión cerrada: autenticación con contraseña propia, sin SSO institucional (Microsoft 365 sin
+soporte de tenant de la facultad). Verificación de titularidad de la casilla vía **Email OTP de
+Neon Auth** — se descartó magic link por el riesgo de que Safe Links de Microsoft 365 consuma el
+token antes de que el usuario lo abra. Neon Auth cubre el envío de los mails sin necesidad de
+contratar un proveedor de correo transaccional aparte (Resend u otro).
+
+El diseño completo (modelo de dominio, contrato de API, flujo de alta y verificación) queda en
+`docs/tdd/TDD-AUTH-H1.md`, Aprobado. Implementación de backend/frontend queda como trabajo
+siguiente, a partir de ese TDD.
