@@ -4,7 +4,14 @@ import { resolve } from "node:path";
 import { AppModule } from "./app.module.js";
 
 config({
-  path: [resolve(process.cwd(), ".env"), resolve(process.cwd(), "../.env")],
+  path: [
+    resolve(process.cwd(), ".env.local"),
+    resolve(process.cwd(), "../.env.local"),
+    resolve(process.cwd(), ".env"),
+    resolve(process.cwd(), "../.env"),
+    resolve(process.cwd(), ".env.production"),
+    resolve(process.cwd(), "../.env.production")
+  ],
 });
 
 async function bootstrap(): Promise<void> {
