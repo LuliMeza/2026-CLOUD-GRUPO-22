@@ -7,6 +7,7 @@
     "front"
   ],
   "scripts": {
+    "start": "concurrently \"npm run start --workspace=back\" \"npm run start --workspace=front\"",
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "dev:back": "npm run start:dev --workspace=back",
@@ -21,5 +22,8 @@
   "overrides": {
     "deepmerge-ts": "8.0.2"
   },
-  "packageManager": "npm@10.9.2"
+  "packageManager": "npm@10.9.2",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
 }

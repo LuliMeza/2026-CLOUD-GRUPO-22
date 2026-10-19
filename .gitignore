@@ -10,6 +10,8 @@ Thumbs.db
 # Entorno
 .env
 .env.local
+.env.production
+
 
 # Logs
 *.log
@@ -40,3 +42,4 @@ docker-compose.override.yml
 
 # Carpeta para trabajar con claude
 .claude
+.neon
