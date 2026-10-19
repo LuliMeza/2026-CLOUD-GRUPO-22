@@ -1,65 +1,28 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-interface HealthStatus {
-  status: string;
-  service: string;
-}
+import { Badge, Button, Card } from "@/components";
 
 export default function HomePage() {
-  const [health, setHealth] = useState<HealthStatus | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
-
-  useEffect(() => {
-    fetch(`${apiUrl}/health`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data: HealthStatus) => {
-        setHealth(data);
-        setLoading(false);
-      })
-      .catch((err: Error) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [apiUrl]);
-
   return (
     <main>
-      <h1>2026 Cloud Grupo 22</h1>
-      <p>Frontend Next.js desplegado en Vercel.</p>
+      <h1 className="h1">Aula Clara UTN</h1>
+      <p className="body" style={{ color: "var(--ink-muted)", marginTop: 4 }}>
+        Primera pantalla de prueba, conectada al Design System.
+      </p>
 
-      <div style={{
-        marginTop: "2rem",
-        padding: "1.25rem",
-        borderRadius: "8px",
-        border: "1px solid #e5e7eb",
-        backgroundColor: "#ffffff"
-      }}>
-        <h2>Estado de conexión con el Backend (Render)</h2>
-        <p><strong>Backend URL:</strong> <code>{apiUrl}</code></p>
-        
-        {loading && <p>Verificando conexión con el backend...</p>}
-        {error && (
-          <p style={{ color: "#dc2626" }}>
-            ❌ Error de conexión: {error}
-          </p>
-        )}
-        {health && (
-          <p style={{ color: "#16a34a" }}>
-            ✅ Conectado con éxito: <strong>{health.status}</strong> (servicio: {health.service})
-          </p>
-        )}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", marginTop: "var(--space-8)" }}>
+        <Card
+          title="Análisis de Sistemas"
+          meta="Comisión 9D8 · Prof. Rivas"
+          tone="success"
+          comment="Exige, pero avisa todo con anticipación. El TP integrador lleva tiempo, arranquen temprano."
+          footerMeta="+23 valoraciones"
+        />
+      </div>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", marginTop: "var(--space-6)" }}>
+        <Button variant="primary">Dejar valoración</Button>
+        <Button variant="secondary">Ver perfil</Button>
+        <Badge tone="warning" />
       </div>
     </main>
   );
 }
-

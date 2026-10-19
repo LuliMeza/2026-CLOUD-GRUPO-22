@@ -21,9 +21,12 @@ Para quien use agentes en este repositorio:
    tiene que pasar y por qué. Una tarea bien definida es mejor que una confusa — es la diferencia
    entre un agente haciendo lo correcto a la primera y un agente adivinando, equivocándose, y
    quemando un ciclo de revisión.
-2. **Delegar al agente correcto.** Enrutar la tarea a `back`, `front` o `test` según qué parte
+2. **Ejecutar en un contexto limpio.** La ejecución no arranca desde el historial completo de la
+   discusión que armó el plan: arranca desde la tarea ya escrita en `docs/tasks/`. Así no se
+   arrastra ambigüedad ni una decisión a medio tomar que quedó solo en la conversación.
+3. **Delegar al agente correcto.** Enrutar la tarea a `back`, `front` o `test` según qué parte
    del codebase toca.
-3. **Respaldar toda tarea no trivial con un TDD.** Acá "TDD" significa *Technical Design
+4. **Respaldar toda tarea no trivial con un TDD.** Acá "TDD" significa *Technical Design
    Documentation* (documentación de diseño técnico) — no test-driven development. Registra por
    qué se tomó una decisión, no solo qué se implementó. Ver [docs/tdd/](../docs/tdd/).
 

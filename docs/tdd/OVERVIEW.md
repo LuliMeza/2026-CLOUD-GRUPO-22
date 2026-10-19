@@ -10,7 +10,7 @@ Equivalente al patrón estándar de la industria [Architecture Decision Record
 
 ## Cuándo escribir uno
 
-Según el ["Gate de tarea" en `agents/OVERVIEW.md`](../../agents/OVERVIEW.md#gate-de-tarea-exigible),
+Según el ["Gate de tarea" en `.agents/OVERVIEW.md`](../../.agents/OVERVIEW.md#gate-de-tarea-exigible),
 una decisión no trivial (arquitectura, una dependencia nueva, un cambio a una decisión existente)
 necesita un TDD antes de que un agente la implemente.
 

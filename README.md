@@ -38,7 +38,7 @@ entrada. Por ahora, seguir la convención definida alcanza.
 ## Trabajar con Agentes
 
 Este repo define tres agentes por dominio (backend, frontend, testing). Ver
-[agents/OVERVIEW.md](./agents/OVERVIEW.md) para su alcance y la metodología de delegación de
+[.agents/OVERVIEW.md](./.agents/OVERVIEW.md) para su alcance y la metodología de delegación de
 tareas.
 
 ## Contribuir

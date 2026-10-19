@@ -7,20 +7,19 @@ Fecha: 2026-09-27
 
 Refinar y auditar el tablero Trello `2026-UTN-Cloud` (Gemelo Digital) con el agente PO —
 estructura de tarjetas (DoD/DoR), criterio de prioridad, mantenimiento de Historias de Usuario y
-organización de listas — como paso previo a trasladar los cambios al tablero real del equipo
-(`2026-UTN-Cloud`), que por permisos de workspace no se pudo tocar directamente.
+organización de listas.
 
 ## Contexto
 
-El tablero real del equipo vive en un workspace de Trello ajeno (de Benjamín Briones) al que el
-agente PO no tiene acceso vía API — solo puede leer y escribir en el tablero personal
-`2026-UTN-Cloud`, usado como Gemelo Digital mientras tanto. La sincronización hacia el tablero
-real queda pendiente, con dos caminos posibles:
+`2026-UTN-Cloud` (ID `6ab84d2bf785d1d79a69cc9b`) es, y era desde el principio, el tablero real y
+accesible del equipo: tiene a los integrantes reales del grupo (Tiago, Lucia Meza, Cesar Huari) y
+referencia el remote correcto del repo (`github.com/LuliMeza/2026-CLOUD-GRUPO-22.git`) en su
+tarjeta GITHUB. El agente PO siempre tuvo acceso de lectura y escritura vía API sobre este mismo
+tablero — no hubo bloqueo de permisos ni workspace ajeno.
 
-1. Pedirle a Benjamín que sume a Tiago a su **workspace** de Trello (no solo al tablero), y
-   correr ahí al agente PO para que traslade los cambios.
-2. Migrar al equipo entero al Gemelo Digital, asumiendo el costo de migrar manualmente todas las
-   tarjetas que ya existen en el tablero real.
+El tablero que sí pertenece a otro proyecto es `2026-UTN-Grupo-1` (Metodologías Ágiles, Grupo 01),
+ubicado en el mismo workspace de Tiago, no en uno de un tercero. No debe confundirse con
+`2026-UTN-Cloud`.
 
 ## Alcance completado
 
@@ -57,8 +56,6 @@ real queda pendiente, con dos caminos posibles:
 
 ## Resultado
 
-El tablero `2026-UTN-Cloud` (Gemelo Digital) quedó refinado, auditado y documentado — sirve de
-referencia para replicar manualmente los cambios sobre el tablero real del equipo
-(`2026-UTN-Cloud`) una vez resuelto el acceso al workspace, o para migrar el equipo al Gemelo
-Digital si esa resulta la vía elegida. Pendiente explícito: nada de esto se sincronizó todavía al
-tablero real.
+El tablero `2026-UTN-Cloud` quedó refinado, auditado y documentado. No hay sincronización
+pendiente hacia ningún otro tablero: `2026-UTN-Cloud` siempre fue el tablero real del equipo, así
+que los cambios ya están aplicados sobre él.

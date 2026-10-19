@@ -25,5 +25,10 @@ commit, push y limpieza post-merge.
 
 ## Estándares
 
-`docs/standards/` (ej. `git-workflow.md`; los estándares de frontend específicos del stack se
-agregan ahí una vez que se elija la tecnología).
+`docs/standards/`:
+
+- [`git-workflow.md`](../docs/standards/git-workflow.md) — control de versiones (compartido con
+  el resto del repo).
+- [`frontend-design-system.md`](../docs/standards/frontend-design-system.md) — el sistema de
+  diseño "Aula Clara UTN" (tokens, componentes, cómo sincronizarlos) y los criterios WCAG 2.1 AA.
+  Exigible: ninguna tarea de `front/` que toque UI se da por terminada sin pasar ese checklist.

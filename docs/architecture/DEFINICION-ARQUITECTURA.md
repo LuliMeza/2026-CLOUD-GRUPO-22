@@ -67,8 +67,7 @@ excede el presupuesto gratuito del proyecto académico.
 ## 3. Repositorio Inicial con Actividad
 
 - Repositorio: [github.com/LuliMeza/2026-CLOUD-GRUPO-22](https://github.com/LuliMeza/2026-CLOUD-GRUPO-22)
-  — fork de [2026-UTN-GRUPO-01](https://github.com/Tiaguito-dev/2026-UTN-GRUPO-01) (Metodologías
-  Ágiles), continuado por separado para Desarrollo Cloud, Grupo 22.
+  — fork del proyecto base de Metodologías Ágiles, continuado por separado para Desarrollo Cloud, Grupo 22.
 - Rama: `main` (ver [git-workflow.md](../standards/git-workflow.md))
 - Historial heredado del fork desde el primer commit (2026-09-14); 16 commits a la fecha de este
   documento, sin actividad propia nueva todavía más allá del punto de fork
