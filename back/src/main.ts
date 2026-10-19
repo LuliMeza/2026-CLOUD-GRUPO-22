@@ -16,6 +16,7 @@ config({
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   const port = Number(process.env["PORT"] ?? process.env["BACKEND_PORT"] ?? 3001);
 
   await app.listen(port);
