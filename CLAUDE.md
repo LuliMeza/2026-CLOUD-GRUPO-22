@@ -25,9 +25,13 @@ Stack completo, metodología, roles y áreas sensibles: ver [AGENTS.md](./AGENTS
 1. `/planificar` la tarea (si no existe en `docs/tasks/`, crearla primero con el
    formato de `docs/tasks/OVERVIEW.md`).
 2. Revisar el plan generado en `.claude/planes/` (descartable, no se versiona).
-3. `/clear` y `/delegar` al agente de dominio (`back`, `front`, `test`; `po` es de uso
+3. Formalizar lo que salió de la planificación (alcance, exclusiones, criterios de aceptación)
+   en `docs/tasks/pendient/TASK-NNN-descripcion.md` — se actualiza si ya existía desde el paso 1,
+   se crea si no. El plan de `.claude/planes/` nunca es la única copia: lo que no queda en
+   `docs/tasks/` se pierde al descartarlo.
+4. `/clear` y `/delegar` al agente de dominio (`back`, `front`, `test`; `po` es de uso
    personal para Trello).
-4. Lo que quede fuera de alcance va a `docs/tasks/pendient/` como tarea nueva, no se
+5. Lo que quede fuera de alcance va a `docs/tasks/pendient/` como tarea nueva, no se
    improvisa dentro de la actual.
 
 ## Agentes del proyecto
