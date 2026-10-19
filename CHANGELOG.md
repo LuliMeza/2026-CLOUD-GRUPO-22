@@ -10,6 +10,10 @@
 - PostgreSQL local mediante Docker Compose con volumen y healthcheck.
 - Flujo SDD, tareas documentadas y reglas operativas en `AGENTS.md`.
 
+### Cambiado
+
+- Rebranding de entorno y Docker local a Grupo 22: base de datos local `cloud_grupo_22` y neutralización de referencias residuales en documentación de arquitectura.
+
 ### Seguridad
 
 - Prisma usa el adapter JavaScript `pg` sin motor binario nativo.
