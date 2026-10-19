@@ -1,8 +1,73 @@
+/* Aula Clara UTN — tokens y tipos del Design System.
+   Sincronizado a mano desde el artifact de Cowork: si algo cambia ahí (color,
+   tipografía, espaciado), se vuelve a copiar aquí a mano, no hay paquete que
+   se actualice solo. */
+
 :root {
   color-scheme: light;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f5f6f8;
-  color: #1f2937;
+
+  /* color */
+  --surface-100: #fbf8f2;
+  --surface-200: #ffffff;
+  --surface-300: #f1eada;
+  --border: #e4dac4;
+  --border-strong: #948a77;
+  --ink: #211c13;
+  --ink-muted: #6b6252;
+  --primary: #8a5a14;
+  --on-primary: #ffffff;
+  --accent: #0e6b64;
+  --on-accent: #ffffff;
+  --success: #0f766e;
+  --success-tint: #e3f3ef;
+  --warning: #8f5300;
+  --warning-tint: #fceeda;
+  --danger: #8c2f26;
+  --danger-tint: #f8e2de;
+
+  /* tipografía — --font-work-sans y --font-plus-jakarta las define next/font en layout.tsx */
+  --font-sans: var(--font-work-sans), system-ui, sans-serif;
+  --font-display: var(--font-plus-jakarta), var(--font-work-sans), system-ui, sans-serif;
+
+  /* espaciado */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* radios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* sombra */
+  --shadow-sm: 0 1px 2px rgba(33, 28, 19, 0.08);
+  --shadow-md: 0 8px 24px rgba(33, 28, 19, 0.14);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-100: #171410;
+  --surface-200: #201c15;
+  --surface-300: #2b2519;
+  --border: #3c3426;
+  --border-strong: #726a59;
+  --ink: #f3ecdd;
+  --ink-muted: #b6ac95;
+  --primary: #e3a53d;
+  --on-primary: #211c13;
+  --accent: #35b5ac;
+  --on-accent: #0b2422;
+  --success: #2dd4bf;
+  --success-tint: #163330;
+  --warning: #e8a33d;
+  --warning-tint: #2e2108;
+  --danger: #f2726b;
+  --danger-tint: #3a1613;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -11,6 +76,9 @@
 
 body {
   margin: 0;
+  background: var(--surface-100);
+  color: var(--ink);
+  font-family: var(--font-sans);
 }
 
 main {
@@ -18,3 +86,13 @@ main {
   margin-inline: auto;
   padding-block: 4rem;
 }
+
+/* tipos de texto — mismos nombres que type.groups en el Design System */
+.display-lg { font-family: var(--font-display); font-size: 2.5rem; line-height: 2.875rem; font-weight: 700; margin: 0; }
+.display-sm { font-family: var(--font-display); font-size: 1.75rem; line-height: 2.125rem; font-weight: 700; margin: 0; }
+.h1 { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.875rem; font-weight: 700; margin: 0; }
+.h2 { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.625rem; font-weight: 600; margin: 0; }
+.h3 { font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.4375rem; font-weight: 600; margin: 0; }
+.body { font-size: 0.9375rem; line-height: 1.375rem; font-weight: 400; margin: 0; }
+.body-sm { font-size: 0.8125rem; line-height: 1.1875rem; font-weight: 400; margin: 0; }
+.label { font-size: 0.8125rem; line-height: 1rem; font-weight: 600; letter-spacing: 0.02em; }
