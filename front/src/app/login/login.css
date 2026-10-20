@@ -1,0 +1,449 @@
+/* Login de Aula Clara UTN — una sola página responsive.
+   Breakpoints: desktop ≥ 1024 px · tablet 768–1023 px · mobile < 768 px.
+   Todos los colores salen de tokens (globals.css); acá solo hay layout. */
+
+.login {
+  /* Container de ancho: 1cqw = 1 % del ancho de .login. Es lo mismo que vw pero sin
+     contar la barra de scroll vertical (en Windows ocupa ~17 px y desalinearía el horizonte). */
+  container-type: inline-size;
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--surface-illustration);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+/* globals.css le da ancho máximo y padding a <main>; acá no aplica */
+.login__main {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Tema: qué ilustración se ve ---------- */
+
+.login__art--noche {
+  display: none;
+}
+:root[data-theme="dark"] .login__art--dia {
+  display: none;
+}
+:root[data-theme="dark"] .login__art--noche {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .login__art--dia {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .login__art--noche {
+    display: block;
+  }
+}
+
+.login__art {
+  position: absolute;
+  inset: 0;
+}
+.login__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ---------- Toggle de tema ---------- */
+
+.login__theme {
+  position: absolute;
+  z-index: 3;
+  top: var(--space-6);
+  right: var(--space-6);
+}
+
+/* ---------- Marca ---------- */
+
+.login__brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.login__logo-slot {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-100);
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+:root[data-theme="dark"] .login__brand--aside .login__logo-slot {
+  background: var(--surface-200);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .login__brand--aside .login__logo-slot {
+    background: var(--surface-200);
+  }
+}
+.login__wordmark {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.875rem;
+}
+.login__wordmark-utn {
+  color: var(--primary);
+}
+
+.login__tagline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.login__tagline-overline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.login__tagline-text {
+  margin: 0;
+  align-self: flex-start;
+  padding-bottom: var(--space-2);
+  border-bottom: 1.5px dashed var(--border-strong);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  color: var(--ink-muted);
+}
+
+/* ---------- Tarjeta ---------- */
+
+.login__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.login__card-brand {
+  display: none;
+}
+.login__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.login__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  font-weight: 700;
+}
+.login__subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  color: var(--ink-muted);
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+.login__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.login__forgot {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.login__submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.login__divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+.login__signup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.login__signup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.login__signup-question {
+  font-size: 0.9375rem;
+}
+.login__signup-btn {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+}
+.login__note {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: var(--ink-muted);
+}
+
+/* Textos con versión corta en mobile */
+.login__copy-short {
+  display: none;
+}
+
+/* Horizonte: oculto salvo en desktop */
+.login__horizon {
+  display: none;
+  fill: none;
+  stroke: var(--horizon-line);
+  stroke-width: 0.8px;
+  stroke-linecap: round;
+}
+
+/* =================== Desktop ≥ 1024 px =================== */
+
+@media (min-width: 1024px) {
+  .login {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .login__art-col {
+    position: relative;
+    height: 100dvh;
+    padding: 48px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .login__main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+  }
+
+  .login__card {
+    width: 440px;
+    max-width: 100%;
+    padding: 40px;
+  }
+
+  /* Horizonte: sigue la línea de la ilustración desde su borde derecho hasta el
+     borde de la ventana. Solo CSS:
+       k = 1696 / 2528 = 0,6709 (alto/ancho de la imagen)
+       alto renderizado h = min(50cqw · k, 100dvh)  (object-fit: contain)
+       y = 50dvh + (r − 0,5) · h        (r = altura del horizonte en la imagen)
+       x = 25cqw + (h / k) / 2           (centro de la columna + medio ancho de imagen)
+     El svg mide 24 px de alto con la línea en y = 12, por eso el −12px. */
+  .login__horizon {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: calc(50dvh + var(--horizon-ratio-offset) * min(50cqw * 0.6709, 100dvh) - 12px);
+    left: calc(25cqw + min(50cqw, 100dvh / 0.6709) / 2);
+    /* hasta el borde derecho; un svg no se estira con left+right, necesita width explícito */
+    width: calc(75cqw - min(50cqw, 100dvh / 0.6709) / 2);
+    height: 24px;
+    overflow: visible;
+    pointer-events: none;
+  }
+}
+
+/* =================== Tablet y mobile < 1024 px =================== */
+
+@media (max-width: 1023px) {
+  .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 32px 32px;
+  }
+
+  /* La columna de arte deja de ser columna: la imagen pasa a ser fondo de toda la página */
+  .login__art-col {
+    display: contents;
+  }
+  .login__brand--aside,
+  .login__tagline--aside {
+    display: none;
+  }
+
+  .login__theme {
+    top: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .login__main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .login__card {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-8);
+  }
+
+  /* Sobre el vidrio el texto secundario va en ink para que se lea sobre la imagen */
+  .login__subtitle,
+  .login__note,
+  .login__card .ac-field__helper {
+    color: var(--ink);
+  }
+
+  .login__card-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .login__brand--card {
+    gap: var(--space-3);
+  }
+  .login__brand--card .login__logo-slot {
+    width: 48px;
+    height: 48px;
+    background: var(--input-bg);
+    font-size: 0.6875rem;
+  }
+  .login__brand--card .login__wordmark {
+    font-size: 1.375rem;
+    line-height: 1.5rem;
+  }
+  .login__tagline--card {
+    gap: 4px;
+  }
+  .login__tagline--card .login__tagline-overline {
+    font-size: 0.6875rem;
+    color: var(--ink);
+  }
+  .login__tagline--card .login__tagline-text {
+    padding-bottom: 4px;
+    font-size: 1.0625rem;
+    line-height: 1.4375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .login__forgot {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+  }
+  .login__submit {
+    margin-top: 0;
+  }
+
+  .login__divider {
+    background: var(--glass-border);
+  }
+
+  .login__signup-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .login__signup-question {
+    font-weight: 500;
+  }
+  .login__signup-btn {
+    min-height: 48px;
+  }
+}
+
+/* =================== Mobile < 768 px =================== */
+
+@media (max-width: 767px) {
+  .login {
+    padding: 48px var(--space-4) var(--space-6);
+  }
+
+  .login__theme {
+    top: var(--space-2);
+    right: var(--space-4);
+  }
+
+  .login__card {
+    max-width: none;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .login__card-brand {
+    gap: 0;
+  }
+  .login__tagline--card {
+    display: none;
+  }
+  .login__brand--card .login__logo-slot {
+    width: 44px;
+    height: 44px;
+  }
+  .login__brand--card .login__wordmark {
+    font-size: 1.25rem;
+    line-height: 1.375rem;
+  }
+
+  .login__header {
+    gap: 4px;
+  }
+  .login__title {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+  }
+
+  /* Recordarme y ¿Olvidaste…? en dos filas de ≥ 44 px */
+  .login__options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .login__signup,
+  .login__signup-row {
+    gap: var(--space-2);
+  }
+
+  .login__copy-long {
+    display: none;
+  }
+  .login__copy-short {
+    display: inline;
+  }
+}

@@ -16,6 +16,7 @@ defecto y el runtime de Node.js.
 ## Contratos iniciales
 
 - `/`: pantalla inicial para verificar el arranque de Next.js.
+- `/login`: login (estado por defecto, sin auth conectada todavía — ver `docs/tasks/in-progress/TASK-006-login-aula-clara.md`).
 - `NEXT_PUBLIC_API_URL`: URL pública del backend.
 
 ## Comandos
