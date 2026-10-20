@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Work_Sans, Plus_Jakarta_Sans } from "next/font/google";
+import { THEME_STORAGE_KEY } from "@/components/theme";
 import "./globals.css";
 
 // Cuerpo de texto del Design System — se expone como --font-work-sans y
@@ -27,11 +28,23 @@ interface RootLayoutProps {
   children: ReactNode;
 }
 
+// Aplica el tema elegido a mano (ThemeToggle) antes del primer pintado, para que
+// no parpadee de claro a oscuro. Si no hay elección guardada no toca nada y manda
+// prefers-color-scheme vía CSS (ver globals.css).
+const themeInitScript = `try{var t=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 export default function RootLayout({ children }: RootLayoutProps) {
-  // TODO: cuando haya un selector de tema, pasar data-theme="dark" acá según
-  // preferencia del usuario o prefers-color-scheme. Por ahora siempre claro.
   return (
-    <html lang="es" className={`${workSans.variable} ${plusJakartaSans.variable}`}>
+    // suppressHydrationWarning: el script de arriba puede agregar data-theme a
+    // <html> antes de que React hidrate; es esperado.
+    <html
+      lang="es"
+      className={`${workSans.variable} ${plusJakartaSans.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

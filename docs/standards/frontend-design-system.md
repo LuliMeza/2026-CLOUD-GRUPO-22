@@ -10,8 +10,20 @@ está hecha y vive en:
 - `front/src/app/globals.css` — tokens de color/espaciado/radios y las clases de texto (`.h1`,
   `.body`, etc.), con su bloque `[data-theme="dark"]`.
 - `front/src/app/layout.tsx` — carga de Work Sans y Plus Jakarta Sans vía `next/font/google`.
-- `front/src/components/ds.css` — clases de componentes (`.ac-btn`, `.ac-badge`, `.ac-card`).
-- `front/src/components/{Button,Badge,Card}.tsx` — los componentes de React sobre esas clases.
+- `front/src/components/ds.css` — clases de componentes (`.ac-btn`, `.ac-badge`, `.ac-card`,
+  `.ac-panel`, `.ac-field`, `.ac-checkbox`, `.ac-icon-btn`).
+- `front/src/components/{Button,Badge,Card,Panel,TextField,PasswordField,Checkbox,ThemeToggle}.tsx`
+  — los componentes de React sobre esas clases (`icons.tsx`: íconos de contorno; `theme.ts`: tema
+  día/noche).
+
+## Tema día / noche
+
+- El tema claro es el default. El oscuro aplica con `data-theme="dark"` en `<html>` (lo pone
+  `ThemeToggle` y lo recuerda en `localStorage`) o, si el usuario no eligió, con
+  `prefers-color-scheme: dark`. Por eso el bloque oscuro de tokens está dos veces en
+  `globals.css`: cualquier cambio se hace en los dos.
+- En oscuro los inputs de texto usan `--input-bg` (= `surface-100`, un paso más oscuro que la
+  tarjeta) con borde `border-strong`; en claro son blancos.
 
 ## Cuándo y cómo volver a sincronizar
 

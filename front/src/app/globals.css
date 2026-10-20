@@ -45,8 +45,24 @@
   /* sombra */
   --shadow-sm: 0 1px 2px rgba(33, 28, 19, 0.08);
   --shadow-md: 0 8px 24px rgba(33, 28, 19, 0.14);
+
+  /* inputs de texto — en claro blanco; en oscuro un paso más oscuros que la tarjeta */
+  --input-bg: #ffffff;
+
+  /* introducidos por el login */
+  --surface-illustration: #f2ebd8; /* mismo fondo que la ilustración: se funde sin borde */
+  --horizon-line: #0c0800;
+  --horizon-ratio-offset: 0.298; /* horizonte de la ilustración de día (79,8 %) − 0,5 */
+  --glass-bg: rgba(251, 248, 242, 0.28);
+  --glass-blur: 2px;
+  --glass-border: rgba(148, 138, 119, 0.45);
 }
 
+/* Tema oscuro. El bloque se repite dos veces a propósito: CSS no deja compartir
+   declaraciones entre un selector y un @media. Si cambiás un valor, cambialo en
+   los dos.
+   1) elegido a mano (ThemeToggle pone data-theme="dark" en <html>);
+   2) preferencia del sistema, mientras el usuario no haya elegido nada. */
 [data-theme="dark"] {
   color-scheme: dark;
   --surface-100: #171410;
@@ -68,10 +84,60 @@
   --danger-tint: #3a1613;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --input-bg: var(--surface-100);
+  --surface-illustration: #1a1712;
+  --horizon-line: #cfcbca;
+  --horizon-ratio-offset: 0.294; /* horizonte de la ilustración de noche (79,4 %) − 0,5 */
+  --glass-bg: rgba(32, 28, 21, 0.42);
+  --glass-border: rgba(114, 106, 89, 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-100: #171410;
+    --surface-200: #201c15;
+    --surface-300: #2b2519;
+    --border: #3c3426;
+    --border-strong: #726a59;
+    --ink: #f3ecdd;
+    --ink-muted: #b6ac95;
+    --primary: #e3a53d;
+    --on-primary: #211c13;
+    --accent: #35b5ac;
+    --on-accent: #0b2422;
+    --success: #2dd4bf;
+    --success-tint: #163330;
+    --warning: #e8a33d;
+    --warning-tint: #2e2108;
+    --danger: #f2726b;
+    --danger-tint: #3a1613;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --input-bg: var(--surface-100);
+    --surface-illustration: #1a1712;
+    --horizon-line: #cfcbca;
+    --horizon-ratio-offset: 0.294; /* horizonte de la ilustración de noche (79,4 %) − 0,5 */
+    --glass-bg: rgba(32, 28, 21, 0.42);
+    --glass-border: rgba(114, 106, 89, 0.55);
+  }
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Foco visible en todo control interactivo (WCAG 2.4.7). Nunca se quita. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--primary);
+}
+a:hover {
+  color: color-mix(in srgb, var(--primary) 78%, var(--ink));
 }
 
 body {
