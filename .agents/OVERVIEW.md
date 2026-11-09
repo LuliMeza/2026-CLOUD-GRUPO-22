@@ -5,9 +5,12 @@ esta carpeta:
 
 | Agente | Archivo | Alcance |
 |---|---|---|
-| Backend | [back.md](./back.md) | `back/` |
-| Frontend | [front.md](./front.md) | `front/` |
-| Testing | [test.md](./test.md) | `front/tests/`, `back/tests/` |
+| Backend | [back.md](./back.md) | `apps/api/` |
+| Frontend | [front.md](./front.md) | `apps/web/` |
+| Testing | [test.md](./test.md) | `apps/web/tests/`, `apps/api/tests/`, `packages/shared/tests/` |
+
+`packages/shared` (contratos front/back) lo pueden modificar `back` y `front`: un cambio de
+contrato se hace ahí primero y después se adapta cada lado en la misma tarea.
 
 Además existe un agente `po` de uso personal (Product Owner + Scrum Master + organizador del
 tablero Trello) definido solo en `.claude/agents/po.md`, no versionado y sin perfil público en
@@ -26,9 +29,9 @@ Para quien use agentes en este repositorio:
    arrastra ambigüedad ni una decisión a medio tomar que quedó solo en la conversación.
 3. **Delegar al agente correcto.** Enrutar la tarea a `back`, `front` o `test` según qué parte
    del codebase toca.
-4. **Respaldar toda tarea no trivial con un TDD.** Acá "TDD" significa *Technical Design
-   Documentation* (documentación de diseño técnico) — no test-driven development. Registra por
-   qué se tomó una decisión, no solo qué se implementó. Ver [docs/tdd/](../docs/tdd/).
+4. **Escribir las decisiones en la tarea.** Toda decisión no trivial queda en la sección
+   "Decisiones" de su tarea: qué se eligió, qué se descartó y por qué. Dónde va cada cosa después
+   (regla vigente, historial): [CONTRIBUTING.md](../CONTRIBUTING.md#decisiones-dónde-se-registra-cada-cosa).
 
 ## Gate de tarea (exigible)
 
@@ -37,9 +40,9 @@ Un agente (`back`, `front` o `test`) no puede empezar a implementar una tarea a 
 1. **Exista una tarea bajo `docs/tasks/`**, con alcance, exclusiones, restricciones, criterios de
    aceptación y validaciones. Una tarea ambigua se aclara antes de escribir código, no mientras se
    escribe.
-2. **Las decisiones no triviales estén respaldadas por un TDD** bajo `docs/tdd/` — arquitectura,
-   dependencia nueva, contrato o cambio a una decisión existente. Si todavía no existe, se escribe
-   primero.
+2. **Las decisiones no triviales estén escritas en la tarea** (sección "Decisiones") —
+   arquitectura, dependencia nueva, contrato o cambio a una decisión existente. Si todavía no
+   están, se escriben primero.
 
 Restricciones operativas:
 
@@ -53,7 +56,7 @@ Restricciones operativas:
   validación y mueve la tarea a `docs/tasks/finished/`.
 
 Las tareas bien definidas dan mejores resultados que las ambiguas, y las decisiones que viven
-solo en un historial de chat se pierden. Registrarlas como TDD mantiene el razonamiento
+solo en un historial de chat se pierden. Escribirlas en la tarea mantiene el razonamiento
 disponible para la próxima persona (o agente) que toque esa área.
 
 ## Estos perfiles vs. los sub-agentes de Claude Code

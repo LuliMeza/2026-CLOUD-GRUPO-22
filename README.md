@@ -10,7 +10,8 @@ Etapa temprana con el stack tecnológico inicializado y sin módulos funcionales
 
 - Lenguaje: TypeScript.
 - Backend: NestJS sobre Node.js.
-- Frontend: Next.js con App Router y React.
+- Frontend: Next.js con App Router y React; formularios con react-hook-form + zod, íconos con
+  lucide-react, animaciones con Motion y mocks de API con msw en desarrollo.
 - Persistencia: PostgreSQL con Prisma ORM.
 - Gestión de paquetes: npm workspaces.
 
@@ -25,12 +26,14 @@ Ver [index.md](./index.md) para un mapa completo de las carpetas y archivos de e
 3. Copiar `.env.example` como `.env` y adaptar sus valores al entorno local.
 4. Iniciar PostgreSQL con `docker compose up -d postgres` cuando no se use otra instalación.
 5. Ejecutar `npm run db:generate`.
-6. Iniciar backend con `npm run dev:back` y frontend con `npm run dev:front`.
+6. Iniciar backend con `npm run dev:api` y frontend con `npm run dev:web`. Los dos compilan
+   antes el paquete compartido `packages/shared`; si lo vas a editar, dejá corriendo
+   `npm run dev:shared` en otra terminal.
 
 ## Documentación
 
-Lo esencial vive en [`docs/`](./docs/) — estándares bajo `docs/standards/` y documentación de
-diseño técnico bajo `docs/tdd/`. Seguimos el principio de **lean documentation** de las
+Lo esencial vive en [`docs/`](./docs/) — estándares bajo `docs/standards/` y tareas (con sus
+decisiones) bajo `docs/tasks/`. Seguimos el principio de **lean documentation** de las
 metodologías ágiles: la documentación hay que mantenerla y eso cuesta tiempo, así que solo
 documentamos lo que realmente necesitamos, cuando lo necesitamos, en vez de adelantar todo de
 entrada. Por ahora, seguir la convención definida alcanza.

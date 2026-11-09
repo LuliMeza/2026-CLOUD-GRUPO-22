@@ -6,17 +6,17 @@ Escribe y mantiene los tests automatizados de las dos aplicaciones de este repos
 
 ## Alcance
 
-- `front/tests/`
-- `back/tests/`
+- `apps/web/tests/`
+- `apps/api/tests/`
 
 ## Fuera de Alcance
 
-- Lógica de aplicación/negocio bajo `front/` o `back/` — este agente la testea, no la construye.
+- Lógica de aplicación/negocio bajo `apps/web/` o `apps/api/` — este agente la testea, no la construye.
 
 ## Inputs Requeridos
 
 - Una tarea bien definida (ver ["Gate de tarea" en OVERVIEW.md](./OVERVIEW.md#gate-de-tarea-exigible))
-- Un TDD linkeado bajo `docs/tdd/` cuando hay una decisión de estrategia de testing de por medio
+- La sección "Decisiones" de la tarea completa cuando hay una decisión de estrategia de testing de por medio
   (ej. adoptar un framework de testing)
 
 ## Workflow

@@ -4,7 +4,6 @@ Estado: Aprobado
 
   
 Fecha: 2026-09-27
-Referencia técnica completa: [TDD-INFRA-CLOUD-H1](../tdd/TDD-INFRA-CLOUD-H1.md)
 
 ## 1. Diagrama Cloud Detallado
 
@@ -35,8 +34,8 @@ Alumno y Jefe Departamental/Admin (sin perfil ni vista de profesor).
 ### 2.1. Flujo de despliegue
 
 1. Un commit se integra en `main`.
-2. Vercel detecta el push y compila el workspace `front/`.
-3. Render detecta el push, compila y levanta el workspace `back/`, escuchando en el puerto
+2. Vercel detecta el push y compila el workspace `apps/web/`.
+3. Render detecta el push, compila y levanta el workspace `apps/api/`, escuchando en el puerto
  asignado por la variable `PORT`.
 4. El backend se conecta a Neon mediante `DATABASE_URL` (con `sslmode=require`).
 5. El frontend consulta al backend mediante `NEXT_PUBLIC_API_URL`; `GET /health` confirma que
@@ -61,8 +60,6 @@ ejecución y complica el pool de conexiones a PostgreSQL.
 días; Neon ofrece nivel gratuito permanente compatible con Prisma.
 - **Sin Docker en producción en esta fase:** alojar contenedores propios (EC2, Droplets, clusters)
 excede el presupuesto gratuito del proyecto académico.
-- Detalle completo de casos de borde (cold start, CORS, fallo SSL) en
-[TDD-INFRA-CLOUD-H1 §4](../tdd/TDD-INFRA-CLOUD-H1.md#4-casos-de-borde-y-manejo-de-errores).
 
 ## 3. Repositorio Inicial con Actividad
 
@@ -71,9 +68,9 @@ excede el presupuesto gratuito del proyecto académico.
 - Rama: `main` (ver [git-workflow.md](../standards/git-workflow.md))
 - Historial heredado del fork desde el primer commit (2026-09-14); 16 commits a la fecha de este
   documento, sin actividad propia nueva todavía más allá del punto de fork
-- Estructura: npm workspaces (`front/`, `back/`), Docker Compose para PostgreSQL local, Node.js
+- Estructura: npm workspaces (`apps/web/`, `apps/api/`), Docker Compose para PostgreSQL local, Node.js
 22.22.3 + TypeScript, NestJS + Next.js + Prisma (ver
-[TDD-STACK-H1](../tdd/TDD-STACK-H1.md) y [TASK-001](../tasks/finished/TASK-001-formalizar-stack-inicial.md))
+[TASK-001](../tasks/finished/TASK-001-formalizar-stack-inicial.md))
 
 ## 4. Variables Pendientes: Capacidades de IA
 

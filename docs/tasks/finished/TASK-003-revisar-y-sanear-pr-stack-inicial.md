@@ -2,7 +2,6 @@
 
 Estado: Finalizada
 Fecha: 2026-09-27
-TDD: [TDD-STACK-H1](../../tdd/TDD-STACK-H1.md)
 
 ## Objetivo
 
@@ -13,15 +12,13 @@ encontradas, aprobar y mergear la PR, y dejar `desarrollo` sincronizado con el r
 ## Alcance completado
 
 - Recorte de `AGENTS.md` (263 a ~40 líneas): se sacaron las convenciones funcionales, de
-  arquitectura, seguridad y UX que fijaba sin ningún TDD que las respalde.
+  arquitectura, seguridad y UX que fijaba sin ninguna decisión documentada que las respalde.
 - Fusión de `rules/task-intake.md` dentro de `agents/OVERVIEW.md` (sección "Gate de tarea"),
   eliminando la duplicación del mismo gate en dos archivos que podían desincronizarse.
 - Corrección de las referencias a `.agents/skills/` que habían quedado apuntando al path viejo
   `skills/` tras el rename de la PR (`index.md`, `CONTRIBUTING.md`, perfiles personales bajo
   `.claude/agents/`).
-- Ajuste de `docs/tdd/TDD-STACK-H1.md` para cumplir `docs/tdd/template.md`: escenario de falla
-  agregado en 1.3, columna `Código HTTP` restaurada en la tabla de errores con `N/A` justificado
-  donde no aplica.
+- Ajuste del documento de diseño del stack (escenario de falla y tabla de errores), hoy retirado.
 - Aprobación (con comentario no bloqueante) y merge de la PR #3 a `main`.
 - Sincronización de `desarrollo` con `main` (PR #4): ambas ramas habían mergeado el mismo scaffold
   inicial por separado y habían divergido en el grafo de commits sin diferencia real de contenido.

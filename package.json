@@ -3,18 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "back",
-    "front"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
-    "start": "concurrently \"npm run start --workspace=back\" \"npm run start --workspace=front\"",
+    "start": "concurrently \"npm run start --workspace=@cloud-grupo-22/api\" \"npm run start --workspace=@cloud-grupo-22/web\"",
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "dev:back": "npm run start:dev --workspace=back",
-    "dev:front": "npm run dev --workspace=front",
-    "db:generate": "npm run db:generate --workspace=back",
-    "db:migrate": "npm run db:migrate --workspace=back",
-    "db:studio": "npm run db:studio --workspace=back"
+    "dev:api": "npm run start:dev --workspace=@cloud-grupo-22/api",
+    "dev:web": "npm run dev --workspace=@cloud-grupo-22/web",
+    "db:generate": "npm run db:generate --workspace=@cloud-grupo-22/api",
+    "db:migrate": "npm run db:migrate --workspace=@cloud-grupo-22/api",
+    "db:studio": "npm run db:studio --workspace=@cloud-grupo-22/api",
+    "build:shared": "npm run build --workspace=@cloud-grupo-22/shared",
+    "dev:shared": "npm run dev --workspace=@cloud-grupo-22/shared"
   },
   "engines": {
     "node": ">=22.22.3 <23"

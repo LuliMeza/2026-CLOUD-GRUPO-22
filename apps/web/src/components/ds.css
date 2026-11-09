@@ -1,0 +1,526 @@
+/* Clases de componentes del Design System (Button, Badge, Card, Alert, Spinner, campos…).
+   Mismos nombres de clase que el bundle.css del artifact — si se agrega un
+   componente nuevo ahí, se copia la regla acá tal cual. */
+
+.ac-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px; /* WCAG 2.5.8 — objetivo táctil */
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+.ac-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* Tamaño de formulario: 48 px, texto de 15 px. Los botones no llevan sombra. */
+.ac-btn--lg {
+  min-height: 48px;
+  padding: 0 var(--space-6);
+  font-size: 0.9375rem;
+}
+/* ButtonLink: un <a> con aspecto de botón */
+a.ac-btn {
+  text-decoration: none;
+}
+a.ac-btn--secondary:hover {
+  color: var(--ink);
+}
+.ac-btn--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.ac-btn--primary:hover { filter: brightness(1.07); }
+.ac-btn--secondary {
+  background: var(--surface-200);
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.ac-btn--secondary:hover { background: var(--surface-300); }
+.ac-btn--ghost {
+  background: transparent;
+  color: var(--ink-muted);
+}
+.ac-btn--ghost:hover { color: var(--ink); background: var(--surface-300); }
+.ac-btn--accent {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.ac-btn--accent:hover { filter: brightness(1.07); }
+a.ac-btn--accent:hover { color: var(--on-accent); }
+.ac-btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.ac-btn--outline:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.ac-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: none;
+}
+/* Cargando: aspecto neutro (no "apagado"), spinner + texto. Pisa la opacidad de :disabled. */
+.ac-btn--loading,
+.ac-btn--loading:disabled {
+  gap: var(--space-3);
+  opacity: 1;
+  background: var(--surface-300);
+  color: var(--ink);
+  border-color: var(--border-strong);
+  cursor: progress;
+}
+
+.ac-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 28px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.ac-badge__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+.ac-badge--success { background: var(--success-tint); color: var(--success); }
+.ac-badge--success .ac-badge__dot { background: var(--success); }
+.ac-badge--warning { background: var(--warning-tint); color: var(--warning); }
+.ac-badge--warning .ac-badge__dot { background: var(--warning); }
+.ac-badge--danger { background: var(--danger-tint); color: var(--danger); }
+.ac-badge--danger .ac-badge__dot { background: var(--danger); }
+.ac-badge--accent { background: var(--accent); color: var(--on-accent); }
+.ac-badge--accent .ac-badge__dot { background: var(--on-accent); }
+
+.ac-card {
+  width: 320px;
+  background: var(--surface-200);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.ac-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.ac-card__title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4375rem;
+  margin: 0;
+}
+.ac-card__meta {
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: var(--ink-muted);
+  margin: 2px 0 0;
+}
+.ac-card__comment {
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  color: var(--ink);
+  margin: var(--space-3) 0 0;
+}
+.ac-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+.ac-card__footer-meta {
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: var(--ink-muted);
+}
+
+/* ---------- Panel (contenedor genérico) ---------- */
+
+.ac-panel {
+  background: var(--surface-200);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.ac-panel--glass {
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+@media (max-width: 1023px) {
+  .ac-panel--glass-touch {
+    border-color: var(--glass-border);
+    box-shadow: var(--shadow-md);
+  }
+}
+/* Sin backdrop-filter el vidrio no se lee bien: queda sólido (surface-200). */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ac-panel--glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur));
+  }
+  @media (max-width: 1023px) {
+    .ac-panel--glass-touch {
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      backdrop-filter: blur(var(--glass-blur));
+    }
+  }
+}
+
+/* Cristal fuerte (Panel glass="strong"): casi opaco, para formularios largos. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ac-panel--glass.ac-panel--glass-strong {
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+    backdrop-filter: blur(var(--glass-blur-strong));
+  }
+  @media (max-width: 1023px) {
+    .ac-panel--glass-touch.ac-panel--glass-strong {
+      background: var(--glass-bg-strong);
+      -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+      backdrop-filter: blur(var(--glass-blur-strong));
+    }
+  }
+}
+
+/* ---------- TextField / PasswordField ---------- */
+
+.ac-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.ac-field__label {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.ac-field__control {
+  position: relative;
+}
+.ac-field__input {
+  width: 100%;
+  height: 48px;
+  margin: 0;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.9375rem;
+}
+.ac-field__input::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
+}
+/* 16 px por debajo de desktop: iOS hace zoom en inputs con texto < 16 px */
+@media (max-width: 1023px) {
+  .ac-field__input {
+    font-size: 1rem;
+  }
+}
+.ac-field__input--trailing {
+  padding-right: 52px;
+}
+.ac-field__trailing-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ac-field__trailing-btn:hover {
+  color: var(--ink);
+}
+.ac-field__helper {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: var(--ink-muted);
+}
+/* Error: borde de 2 px en danger (≥3:1, WCAG 1.4.11). El padding se achica 1 px
+   para que el texto no salte al aparecer el error. */
+.ac-field__input--invalid {
+  border: 2px solid var(--danger);
+  padding-left: calc(var(--space-3) - 1px);
+}
+.ac-field__input--invalid.ac-field__input--trailing {
+  padding-right: 51px;
+}
+.ac-field__error {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  font-weight: 500;
+  color: var(--danger);
+}
+.ac-field__error-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ac-field__input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Checkbox ---------- */
+
+.ac-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.ac-checkbox__input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+@media (max-width: 1023px) {
+  .ac-checkbox {
+    min-height: 44px; /* WCAG 2.5.8: toda la fila es el objetivo táctil */
+    gap: var(--space-3);
+    padding-right: var(--space-2);
+    font-weight: 500;
+  }
+  .ac-checkbox__input {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ---------- Icon button / ThemeToggle ---------- */
+
+.ac-icon-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-200);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ac-icon-btn:hover {
+  background: var(--surface-300);
+}
+/* El ícono se decide por CSS (mismo criterio que los tokens) para no parpadear al hidratar. */
+.ac-theme-toggle__sun {
+  display: none;
+}
+[data-theme="dark"] .ac-theme-toggle__moon {
+  display: none;
+}
+[data-theme="dark"] .ac-theme-toggle__sun {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ac-theme-toggle__moon {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .ac-theme-toggle__sun {
+    display: block;
+  }
+}
+
+/* ---------- Alert ---------- */
+
+.ac-alert {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.ac-alert:focus {
+  outline: none;
+}
+.ac-alert:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.ac-alert--danger { background: var(--danger-tint); }
+.ac-alert--warning { background: var(--warning-tint); }
+.ac-alert--accent { background: var(--success-tint); }
+.ac-alert__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.ac-alert__icon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.ac-alert--danger .ac-alert__icon,
+.ac-alert--danger .ac-alert__title { color: var(--danger); }
+.ac-alert--warning .ac-alert__icon,
+.ac-alert--warning .ac-alert__title { color: var(--warning); }
+.ac-alert--accent .ac-alert__icon,
+.ac-alert--accent .ac-alert__title { color: var(--accent); }
+.ac-alert__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.ac-alert__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  font-weight: 600;
+}
+.ac-alert__description,
+.ac-alert__footnote {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+}
+.ac-alert__footnote {
+  color: var(--ink-muted);
+}
+.ac-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.ac-alert__actions > .ac-btn {
+  flex: 1 1 140px;
+  font-size: 0.9375rem;
+}
+@media (max-width: 1023px) {
+  .ac-alert__actions > .ac-btn {
+    min-height: 48px;
+  }
+}
+
+/* ---------- StepIndicator ---------- */
+
+.ac-steps {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.ac-steps__label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ac-steps__bars {
+  display: flex;
+  gap: 4px;
+}
+.ac-steps__bar {
+  width: 24px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+}
+.ac-steps__bar--done {
+  background: var(--primary);
+}
+@media (max-width: 767px) {
+  .ac-steps__bar {
+    width: 20px;
+  }
+}
+
+/* ---------- PendingText ---------- */
+
+/* Dato a definir: subrayado punteado (convención del diseño). */
+.ac-pending {
+  padding-bottom: 2px;
+  border-bottom: 1.5px dashed var(--border-strong);
+}
+
+/* ---------- ResponsiveText ---------- */
+
+/* Versión corta del texto solo en mobile (< 768 px). Ver ResponsiveText.tsx. */
+.ac-text-short {
+  display: none;
+}
+@media (max-width: 767px) {
+  .ac-text-long {
+    display: none;
+  }
+  .ac-text-short {
+    display: inline;
+  }
+}
+
+/* ---------- Spinner ---------- */
+
+.ac-spinner {
+  flex-shrink: 0;
+  animation: ac-spin 0.9s linear infinite;
+}
+.ac-spinner__track { stroke: var(--border); }
+.ac-spinner__arc { stroke: var(--primary); }
+@keyframes ac-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-btn {
+    transition: none;
+  }
+  /* Más lento en vez de quieto: sigue diciendo "está pasando algo". */
+  .ac-spinner {
+    animation-duration: 2.4s;
+  }
+}

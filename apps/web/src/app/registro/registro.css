@@ -1,0 +1,9 @@
+/* Estilos propios de Crear cuenta. La estructura (ilustración, marca, tarjeta, formulario, pie)
+   es compartida y vive en ../_auth/auth.css. */
+
+/* Código de verificación (paso 2): dígitos grandes y separados, como en el diseño */
+.ac-field__input.register__code {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+}

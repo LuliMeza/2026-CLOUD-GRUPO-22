@@ -1,0 +1,32 @@
+/* Estilos propios del login. La estructura de la pantalla (ilustración, marca, tarjeta,
+   formulario, pie) es compartida y vive en ../_auth/auth.css. */
+
+.login__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.login__forgot {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* Tablet y mobile */
+@media (max-width: 1023px) {
+  .login__forgot {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+  }
+}
+
+/* Mobile: Recordarme y ¿Olvidaste…? en dos filas de ≥ 44 px */
+@media (max-width: 767px) {
+  .login__options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+}

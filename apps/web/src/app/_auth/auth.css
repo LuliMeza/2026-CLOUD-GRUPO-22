@@ -1,0 +1,593 @@
+/* Estructura compartida de las pantallas de autenticación (login, crear cuenta, y las
+   que vienen: verificar email, recuperar contraseña). La usa AuthShell.tsx.
+   Breakpoints: desktop ≥ 1024 px · tablet 768–1023 px · mobile < 768 px.
+   Todos los colores salen de tokens; acá solo hay layout.
+
+   Variantes (clases en la raíz .auth, las pone AuthShell según sus props):
+   - .auth--glass-strong: la tarjeta es casi opaca en tablet/mobile (Panel glass="strong"),
+     así que el texto secundario se queda en ink-muted.
+   - .auth--card-tagline: la tarjeta muestra el tagline en tablet.
+   - .auth--mobile-header: en mobile la marca va en una barra superior y la tarjeta
+     arranca debajo (no centrada).
+   - .auth--centered: paso 2 del registro. En desktop la tarjeta va al centro con la marca y
+     el tagline arriba; en todos los anchos la ilustración queda de fondo, borrosa. El
+     movimiento de la tarjeta y la marca lo anima Motion (AuthShell); el de la ilustración,
+     CSS con la misma duración y curva (src/styles/motion.ts). */
+
+.auth {
+  /* Mismos valores que MOTION_DURATION.move y MOTION_EASE de src/styles/motion.ts */
+  --auth-move-duration: 700ms;
+  --auth-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* Separación entre bloques de la tarjeta (encabezado, aviso, formulario, pie) */
+  --auth-card-gap: var(--space-6);
+  /* Container de ancho: 1cqw = 1 % del ancho de .auth. Es lo mismo que vw pero sin
+     contar la barra de scroll vertical (en Windows ocupa ~17 px y desalinearía el horizonte). */
+  container-type: inline-size;
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--surface-illustration);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+/* globals.css le da ancho máximo y padding a <main>; acá no aplica */
+.auth__main {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Tema: qué ilustración se ve ---------- */
+
+.auth__art--noche {
+  display: none;
+}
+:root[data-theme="dark"] .auth__art--dia {
+  display: none;
+}
+:root[data-theme="dark"] .auth__art--noche {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .auth__art--dia {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .auth__art--noche {
+    display: block;
+  }
+}
+
+/* Capa de la ilustración: columna izquierda en desktop, fondo de toda la página en tablet y
+   mobile. Con .auth--centered se desenfoca (y en desktop se estira a todo el ancho). */
+.auth__art-layer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  transition-property: width, filter, opacity;
+  transition-duration: var(--auth-move-duration);
+  transition-timing-function: var(--auth-ease);
+}
+.auth--centered .auth__art-layer {
+  filter: blur(6px);
+  opacity: 0.7;
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth__art-layer {
+    transition: none;
+  }
+}
+
+.auth__art {
+  position: absolute;
+  inset: 0;
+}
+.auth__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ---------- Toggle de tema ---------- */
+
+.auth__theme {
+  position: absolute;
+  z-index: 3;
+  top: var(--space-6);
+  right: var(--space-6);
+}
+
+/* ---------- Marca ---------- */
+
+.auth__brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.auth__logo-slot {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-100);
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+:root[data-theme="dark"] .auth__brand--aside .auth__logo-slot {
+  background: var(--surface-200);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .auth__brand--aside .auth__logo-slot {
+    background: var(--surface-200);
+  }
+}
+.auth__wordmark {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.875rem;
+}
+.auth__wordmark-utn {
+  color: var(--primary);
+}
+
+.auth__tagline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.auth__tagline-overline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.auth__tagline-text {
+  margin: 0;
+  align-self: flex-start;
+  padding-bottom: var(--space-2);
+  border-bottom: 1.5px dashed var(--border-strong);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  color: var(--ink-muted);
+}
+
+/* Barra superior con la marca: solo en mobile con .auth--mobile-header */
+.auth__topbar {
+  display: none;
+}
+
+/* ---------- Tarjeta ---------- */
+
+.auth__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-card-gap);
+}
+/* Contenido que cambia (ej. paso 1 ↔ paso 2): AuthShell anima su alto y su fundido */
+.auth__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-card-gap);
+}
+.auth__card-brand {
+  display: none;
+}
+.auth__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.auth__header--eyebrow {
+  gap: var(--space-3);
+}
+.auth__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  font-weight: 700;
+}
+.auth__subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  color: var(--ink-muted);
+}
+
+/* Formulario: AuthForm-like. El fieldset solo agrupa para deshabilitar todo junto. */
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+.auth__fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.auth__submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.auth__divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+/* Acción alternativa al pie ("¿Todavía no tenés cuenta? Crear cuenta", "¿Ya tenés cuenta? Ingresar") */
+.auth__alt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.auth__alt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.auth__alt-question {
+  font-size: 0.9375rem;
+}
+.auth__alt-btn {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+}
+.auth__note {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: var(--ink-muted);
+}
+/* Acción con forma de link dentro de un texto (ej. "¿Te equivocaste de email? Volver al paso 1") */
+.auth__inline-action {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.auth__inline-action:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Horizonte: oculto salvo en desktop */
+.auth__horizon {
+  display: none;
+  fill: none;
+  stroke: var(--horizon-line);
+  stroke-width: 0.8px;
+  stroke-linecap: round;
+}
+
+/* =================== Desktop ≥ 1024 px =================== */
+
+@media (min-width: 1024px) {
+  .auth {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .auth__art-layer {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100dvh;
+  }
+
+  .auth__art-col {
+    position: relative;
+    height: 100dvh;
+    padding: 48px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .auth__main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+  }
+
+  /* Ancho del contenido, así Motion mueve una caja del mismo tamaño en los dos layouts */
+  .auth__brand--aside,
+  .auth__tagline--aside {
+    align-self: flex-start;
+  }
+
+  .auth__card {
+    width: 440px;
+    max-width: 100%;
+    padding: 40px;
+  }
+
+  /* Horizonte: sigue la línea de la ilustración desde su borde derecho hasta el
+     borde de la ventana. Solo CSS:
+       k = 1696 / 2528 = 0,6709 (alto/ancho de la imagen)
+       alto renderizado h = min(50cqw · k, 100dvh)  (object-fit: contain)
+       y = 50dvh + (r − 0,5) · h        (r = altura del horizonte en la imagen)
+       x = 25cqw + (h / k) / 2           (centro de la columna + medio ancho de imagen)
+     El svg mide 24 px de alto con la línea en y = 12, por eso el −12px. */
+  .auth__horizon {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: calc(50dvh + var(--horizon-ratio-offset) * min(50cqw * 0.6709, 100dvh) - 12px);
+    left: calc(25cqw + min(50cqw, 100dvh / 0.6709) / 2);
+    /* hasta el borde derecho; un svg no se estira con left+right, necesita width explícito */
+    width: calc(75cqw - min(50cqw, 100dvh / 0.6709) / 2);
+    height: 24px;
+    overflow: visible;
+    pointer-events: none;
+    transition: opacity var(--auth-move-duration) var(--auth-ease);
+  }
+
+  /* ----- Layout centrado: marca, tagline y tarjeta en una columna al centro ----- */
+  .auth--centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* safe: si no entra en el alto, arranca arriba y la página hace scroll */
+    justify-content: safe center;
+    padding: var(--space-6);
+  }
+  .auth--centered .auth__art-layer {
+    width: 100%;
+  }
+  /* La columna deja de existir: la marca y el tagline pasan a ser parte de la columna central */
+  .auth--centered .auth__art-col {
+    display: contents;
+  }
+  .auth--centered .auth__brand--aside {
+    align-self: center;
+    margin-bottom: var(--space-4);
+  }
+  .auth--centered .auth__tagline--aside {
+    align-self: center;
+    align-items: center;
+    margin-bottom: var(--space-8);
+  }
+  .auth--centered .auth__tagline--aside .auth__tagline-text {
+    align-self: center;
+  }
+  .auth--centered .auth__horizon {
+    opacity: 0;
+  }
+  .auth--centered .auth__main {
+    padding: 0;
+  }
+}
+
+/* =================== Tablet y mobile < 1024 px =================== */
+
+@media (max-width: 1023px) {
+  .auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 32px 32px;
+  }
+
+  /* La columna de arte deja de ser columna: la imagen pasa a ser fondo de toda la página */
+  .auth__art-col {
+    display: contents;
+  }
+  .auth__brand--aside,
+  .auth__tagline--aside {
+    display: none;
+  }
+
+  .auth__theme {
+    top: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .auth__main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .auth__card {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-8);
+  }
+
+  /* Sobre el vidrio liviano el texto secundario va en ink para que se lea sobre la imagen.
+     Con vidrio fuerte la tarjeta es casi opaca y se queda en ink-muted. */
+  .auth:not(.auth--glass-strong) .auth__subtitle,
+  .auth:not(.auth--glass-strong) .auth__note,
+  .auth:not(.auth--glass-strong) .auth__card .ac-field__helper {
+    color: var(--ink);
+  }
+
+  .auth__card-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .auth__brand--card {
+    gap: var(--space-3);
+  }
+  .auth__brand--card .auth__logo-slot {
+    width: 48px;
+    height: 48px;
+    background: var(--input-bg);
+    font-size: 0.6875rem;
+  }
+  .auth__brand--card .auth__wordmark {
+    font-size: 1.375rem;
+    line-height: 1.5rem;
+  }
+  .auth__tagline--card {
+    display: none;
+  }
+  .auth--card-tagline .auth__tagline--card {
+    display: flex;
+    gap: 4px;
+  }
+  .auth__tagline--card .auth__tagline-overline {
+    font-size: 0.6875rem;
+    color: var(--ink);
+  }
+  .auth__tagline--card .auth__tagline-text {
+    padding-bottom: 4px;
+    font-size: 1.0625rem;
+    line-height: 1.4375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .auth__submit {
+    margin-top: 0;
+  }
+
+  .auth__divider {
+    background: var(--glass-border);
+  }
+
+  .auth__alt-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .auth__alt-question {
+    font-weight: 500;
+  }
+  .auth__alt-btn {
+    min-height: 48px;
+  }
+}
+
+/* =================== Mobile < 768 px =================== */
+
+@media (max-width: 767px) {
+  .auth {
+    padding: 48px var(--space-4) var(--space-6);
+  }
+
+  .auth__theme {
+    top: var(--space-2);
+    right: var(--space-4);
+  }
+
+  .auth {
+    --auth-card-gap: 20px;
+  }
+
+  .auth__card {
+    max-width: none;
+    padding: 20px;
+  }
+
+  .auth__card-brand {
+    gap: 0;
+  }
+  .auth--card-tagline .auth__tagline--card {
+    display: none;
+  }
+  .auth__brand--card .auth__logo-slot {
+    width: 44px;
+    height: 44px;
+  }
+  .auth__brand--card .auth__wordmark {
+    font-size: 1.25rem;
+    line-height: 1.375rem;
+  }
+
+  .auth__header {
+    gap: 4px;
+  }
+  .auth__header--eyebrow {
+    gap: var(--space-2);
+  }
+  .auth__title {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+  }
+
+  .auth__alt,
+  .auth__alt-row {
+    gap: var(--space-2);
+  }
+
+
+  /* ----- Variante con barra superior ----- */
+  .auth--mobile-header {
+    display: block;
+    padding: 0 0 var(--space-6);
+  }
+  .auth--mobile-header .auth__topbar {
+    position: relative;
+    z-index: 2;
+    height: 64px;
+    padding: 10px var(--space-4);
+    display: flex;
+    align-items: center;
+  }
+  /* El toggle queda absoluto (primer Tab), alineado dentro de la barra */
+  .auth--mobile-header .auth__theme {
+    top: 10px;
+  }
+  .auth--mobile-header .auth__main {
+    padding: var(--space-2) var(--space-4) 0;
+  }
+  .auth--mobile-header .auth__card-brand {
+    display: none;
+  }
+  .auth__brand--bar {
+    gap: 10px;
+  }
+  .auth__brand--bar .auth__logo-slot {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--input-bg);
+    font-size: 0.625rem;
+  }
+  .auth__brand--bar .auth__wordmark {
+    flex-direction: row;
+    gap: 0.3em;
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+  }
+}

@@ -2,7 +2,7 @@
 
 Estado: Pendiente
 Fecha: 2026-10-20
-TDD relacionado: [TDD-AUTH-H1](../../tdd/TDD-AUTH-H1.md)
+Contexto de producto: HU-01 y [TASK-004](../finished/TASK-004-investigar-autenticacion-institucional.md). Las reglas de auth (respuestas y errores) pasan a los contratos de `packages/shared` ([TASK-014](./TASK-014-contratos-compartidos-y-catalogo-de-errores.md)).
 
 ## 1. Contexto y Objetivo
 
@@ -28,9 +28,9 @@ Las dos últimas ya están conectadas entre artboards en el diseño.
 - Diseñar las pantallas faltantes: Verificar email (OTP) y Recuperar contraseña (pedido + código y
   contraseña nueva), en 1440/768/390 y modo noche y claro.
 - Conectar en el diseño los destinos de la tabla y quitar los `TODO(rutas)` resueltos.
-- Al implementar en `front/`: reemplazar los `TODO(rutas)` de TASK-006 y de las pantallas nuevas
+- Al implementar en `apps/web/`: reemplazar los `TODO(rutas)` de TASK-006 y de las pantallas nuevas
   por las rutas reales.
-- Definir con backend el endpoint de reenvío de OTP (el TDD no tiene uno explícito).
+- Definir con backend el endpoint de reenvío de OTP (se define en los contratos de TASK-014).
 
 ## 3. Exclusiones
 
@@ -44,7 +44,7 @@ Las dos últimas ya están conectadas entre artboards en el diseño.
 ## 5. Validaciones
 
 - [ ] Recorrer el flujo completo en modo Play del diseño.
-- [ ] Recorrer el flujo en `npm run dev:front` solo con teclado.
+- [ ] Recorrer el flujo en `npm run dev:web` solo con teclado.
 
 ## 6. Resultado
 

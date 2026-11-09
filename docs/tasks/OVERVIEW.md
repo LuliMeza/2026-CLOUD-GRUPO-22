@@ -17,7 +17,7 @@ Cada archivo usa `TASK-NNN-descripcion-corta.md` y debe incluir:
 
 - estado y fecha de última actualización;
 - objetivo y contexto;
-- TDD relacionado cuando exista una decisión técnica no trivial;
+- decisiones: qué se eligió, qué se descartó y por qué, cuando hay una decisión no trivial;
 - alcance y exclusiones explícitas;
 - restricciones operativas;
 - criterios de aceptación verificables;
@@ -29,4 +29,4 @@ validación manual, se actualizan una sola vez la documentación de entrega, sus
 `CHANGELOG.md`; recién entonces la tarea se mueve a `finished/` y se aplica `commit-work`.
 
 Las tareas deben respetar el ["Gate de tarea" en `.agents/OVERVIEW.md`](../../.agents/OVERVIEW.md#gate-de-tarea-exigible),
-los estándares bajo `docs/standards/` y las decisiones bajo `docs/tdd/`.
+los estándares bajo `docs/standards/` y las reglas de [CONTRIBUTING.md](../../CONTRIBUTING.md).

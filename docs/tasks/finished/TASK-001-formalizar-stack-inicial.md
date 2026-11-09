@@ -2,7 +2,6 @@
 
 Estado: Finalizada
 Fecha: 2026-09-24
-TDD: [TDD-STACK-H1](../../tdd/TDD-STACK-H1.md)
 
 ## Objetivo
 
