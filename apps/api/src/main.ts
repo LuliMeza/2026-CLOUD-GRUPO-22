@@ -3,14 +3,15 @@ import { NestFactory } from "@nestjs/core";
 import { resolve } from "node:path";
 import { AppModule } from "./app.module.js";
 
+// cwd es apps/api (npm corre los scripts del workspace ahí); la raíz del repo está dos niveles arriba.
 config({
   path: [
     resolve(process.cwd(), ".env.local"),
-    resolve(process.cwd(), "../.env.local"),
+    resolve(process.cwd(), "../../.env.local"),
     resolve(process.cwd(), ".env"),
-    resolve(process.cwd(), "../.env"),
+    resolve(process.cwd(), "../../.env"),
     resolve(process.cwd(), ".env.production"),
-    resolve(process.cwd(), "../.env.production")
+    resolve(process.cwd(), "../../.env.production")
   ],
 });
 
