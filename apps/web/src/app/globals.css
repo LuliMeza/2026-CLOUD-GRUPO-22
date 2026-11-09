@@ -1,0 +1,46 @@
+/* Aula Clara UTN — tokens del Design System.
+   Las variables (color, tipografía, espaciado, radios, sombra) ya NO se
+   escriben a mano aquí: viven en src/styles/tokens.json y este archivo
+   sólo importa lo generado desde ahí. Para cambiar un valor, editar
+   tokens.json — "npm run dev" / "npm run build" regeneran el CSS solos. */
+@import "./tokens.generated.css";
+
+* {
+  box-sizing: border-box;
+}
+
+/* Foco visible en todo control interactivo (WCAG 2.4.7). Nunca se quita. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--primary);
+}
+a:hover {
+  color: color-mix(in srgb, var(--primary) 78%, var(--ink));
+}
+
+body {
+  margin: 0;
+  background: var(--surface-100);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+main {
+  width: min(100% - 2rem, 72rem);
+  margin-inline: auto;
+  padding-block: 4rem;
+}
+
+/* tipos de texto — mismos nombres que type.groups en el Design System */
+.display-lg { font-family: var(--font-display); font-size: 2.5rem; line-height: 2.875rem; font-weight: 700; margin: 0; }
+.display-sm { font-family: var(--font-display); font-size: 1.75rem; line-height: 2.125rem; font-weight: 700; margin: 0; }
+.h1 { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.875rem; font-weight: 700; margin: 0; }
+.h2 { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.625rem; font-weight: 600; margin: 0; }
+.h3 { font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.4375rem; font-weight: 600; margin: 0; }
+.body { font-size: 0.9375rem; line-height: 1.375rem; font-weight: 400; margin: 0; }
+.body-sm { font-size: 0.8125rem; line-height: 1.1875rem; font-weight: 400; margin: 0; }
+.label { font-size: 0.8125rem; line-height: 1rem; font-weight: 600; letter-spacing: 0.02em; }

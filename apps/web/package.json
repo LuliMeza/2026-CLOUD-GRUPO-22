@@ -1,0 +1,36 @@
+{
+  "name": "@cloud-grupo-22/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "npm run build --workspace=@cloud-grupo-22/shared && npm run tokens:build",
+    "dev": "next dev -p 3002",
+    "prebuild": "npm run build --workspace=@cloud-grupo-22/shared && npm run tokens:build",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "tokens:build": "node scripts/build-tokens.mjs"
+  },
+  "dependencies": {
+    "@cloud-grupo-22/shared": "0.1.0",
+    "@hookform/resolvers": "^7.0.3",
+    "lucide-react": "^1.70.0",
+    "motion": "^14.10.1",
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-hook-form": "^7.91.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "msw": "^3.0.4",
+    "typescript": "^6.0.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
