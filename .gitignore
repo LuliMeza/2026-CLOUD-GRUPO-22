@@ -29,7 +29,7 @@ build/
 out/
 target/
 .next/
-back/src/generated/prisma/
+apps/api/src/generated/prisma/
 
 # TypeScript
 *.tsbuildinfo
@@ -43,3 +43,6 @@ docker-compose.override.yml
 # Carpeta para trabajar con claude
 .claude
 .neon
+
+# Generado — fuente real en apps/web/src/styles/tokens.json
+apps/web/src/app/tokens.generated.css
