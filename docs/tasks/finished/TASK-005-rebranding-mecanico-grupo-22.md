@@ -2,7 +2,6 @@
 
 Estado: Finalizada
 Fecha: 2026-10-18
-TDD relacionado: No requiere (rebranding mecánico de configuración y metadata sin impacto en diseño técnico)
 
 ## 1. Contexto y Objetivo
 

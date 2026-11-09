@@ -2,22 +2,22 @@
 
 ## Rol
 
-Implementa y mantiene la aplicación backend bajo `back/`.
+Implementa y mantiene la aplicación backend bajo `apps/api/`.
 
 ## Alcance
 
-- `back/` (código de la aplicación)
+- `apps/api/` (código de la aplicación)
 
 ## Fuera de Alcance
 
-- Código de `front/`
+- Código de `apps/web/`
 - Escribir tests (a cargo del agente de Testing — ver [test.md](./test.md))
 - Decisiones de infraestructura/deploy más allá de lo que una tarea pida explícitamente
 
 ## Inputs Requeridos
 
 - Una tarea bien definida (ver ["Gate de tarea" en OVERVIEW.md](./OVERVIEW.md#gate-de-tarea-exigible))
-- Un TDD linkeado bajo `docs/tdd/` cuando la tarea involucra una decisión de diseño o arquitectura
+- La sección "Decisiones" de la tarea completa cuando involucra una decisión de diseño o arquitectura
 
 ## Workflow
 

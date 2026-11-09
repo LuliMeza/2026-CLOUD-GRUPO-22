@@ -26,12 +26,13 @@ se enfoque en presentar el proyecto.
 |---|---|
 | `docs/` | Documentación del proyecto (lean documentation — ver README). |
 | `docs/standards/` | Estándares y convenciones de código, referenciados desde `CONTRIBUTING.md` (ej. `git-workflow.md`). |
-| `docs/tdd/` | Documentación de diseño técnico (*Technical Design Documentation*, no test-driven development). Ver [docs/tdd/OVERVIEW.md](docs/tdd/OVERVIEW.md). |
-| `docs/tasks/` | Tareas autocontenidas organizadas por estado. |
-| `front/` | Aplicación frontend TypeScript con Next.js y React. |
-| `front/tests/` | Tests de frontend, a cargo del agente de Testing. |
-| `back/` | API TypeScript con NestJS, Prisma ORM y PostgreSQL. |
-| `back/tests/` | Tests de backend, a cargo del agente de Testing. |
+| `docs/api/` | Catálogo de errores y contratos de la API, generado desde `packages/shared` (no se edita a mano). |
+| `docs/tasks/` | Tareas autocontenidas organizadas por estado, con sus decisiones. |
+| `apps/web/` | Aplicación frontend TypeScript con Next.js y React. |
+| `apps/web/tests/` | Tests de frontend, a cargo del agente de Testing. |
+| `apps/api/` | API TypeScript con NestJS, Prisma ORM y PostgreSQL. |
+| `apps/api/tests/` | Tests de backend, a cargo del agente de Testing. |
+| `packages/shared/` | Contratos compartidos front/back: esquemas, catálogo de errores y contratos de endpoints. Ver [packages/shared/OVERVIEW.md](packages/shared/OVERVIEW.md). |
 | `.agents/` | Perfiles de agentes de IA (`.md`): `back`, `front`, `test`. Ver [.agents/OVERVIEW.md](.agents/OVERVIEW.md) para la metodología de delegación. |
 | `.agents/skills/` | Definiciones de skills usables por los agentes, compatibles con Claude, Codex y Gemini. |
 

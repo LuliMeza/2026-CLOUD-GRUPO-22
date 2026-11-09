@@ -1,9 +1,9 @@
 # TASK-011: Corregir el login implementado: email institucional y link a registro
 
-Estado: Pendiente
-Fecha: 2026-10-20
-TDD relacionado: [TDD-AUTH-H1](../../tdd/TDD-AUTH-H1.md) — solo como contexto.
-Depende de: [TASK-006](../in-progress/TASK-006-login-aula-clara.md) (login ya implementado, en validación).
+Estado: Terminada (2026-11-09; validación manual del desarrollador aprobada)
+Fecha: 2026-11-08
+Contexto de producto: HU-01 y [TASK-004](../finished/TASK-004-investigar-autenticacion-institucional.md). Las reglas de auth (respuestas y errores) pasan a los contratos de `packages/shared` ([TASK-014](../finished/TASK-014-contratos-compartidos-y-catalogo-de-errores.md)).
+Depende de: [TASK-006](../finished/TASK-006-login-aula-clara.md) (terminada).
 
 ## Prompt para planificar
 
@@ -19,7 +19,7 @@ Artboards de referencia (página "Login" del canvas): Main.dc.html (Desktop clar
 Login-Mobile.dc.html, Login-Desktop-Noche.dc.html, Login-Tablet-Noche.dc.html y Login-Mobile-Noche.dc.html.
 
 Qué cambió en el diseño respecto de lo implementado en TASK-006:
-- El campo pasa de "Email o usuario" a "Email institucional". Ya no existe nombre de usuario: TDD-AUTH-H1
+- El campo pasa de "Email o usuario" a "Email institucional". Ya no existe nombre de usuario: la definición de auth de TASK-004
   define login solo por email, para alumnos, jefes departamentales y administradores.
 - El input es type="email", inputmode="email", autocomplete="username", placeholder
   "nombre@alu.frlp.utn.edu.ar".
@@ -47,10 +47,14 @@ y la formalización en docs/tasks/.
 
 ## Criterios de aceptación (resumen)
 
-- [ ] Ningún texto, tipo ni atributo del login menciona "usuario".
-- [ ] Textos idénticos a los 6 artboards por defecto.
-- [ ] "Crear cuenta" apunta a /registro con TODO(rutas) mientras la página no exista.
+- [x] Ningún texto, tipo ni atributo del login menciona "usuario".
+- [x] Textos idénticos a los 6 artboards por defecto.
+- [x] "Crear cuenta" apunta a /registro con TODO(rutas) mientras la página no exista.
 
 ## Resultado
 
-Pendiente.
+Decisión: se implementó como tarea aparte de TASK-006, en el mismo cambio que TASK-012 (los
+estados ya usan los textos nuevos). Textos aplicados en `LoginForm.tsx` y `page.tsx`; el campo
+pasó a `email` (`type="email"`, `inputmode="email"`, placeholder `nombre@alu.frlp.utn.edu.ar`) y
+no quedan menciones a "usuario". "Crear cuenta" ya lleva a `/registro` (TASK-013). Validación
+manual aprobada el 2026-11-09, junto con TASK-012.

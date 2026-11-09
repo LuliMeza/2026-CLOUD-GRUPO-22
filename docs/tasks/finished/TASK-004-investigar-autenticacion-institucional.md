@@ -2,7 +2,6 @@
 
 Estado: Finalizada
 Fecha: 2026-10-18
-TDD relacionado: [TDD-AUTH-H1](../../tdd/TDD-AUTH-H1.md) (Aprobado)
 
 ## 1. Contexto y Problema
 
@@ -39,7 +38,7 @@ de verdad y pertenezca a quien se registra. El mecanismo de verificación de esa
       vs. OTP (Spike 2, alcance abierto — resuelto a favor de Email OTP debido al riesgo de Safe Links en Microsoft 365).
 - [x] Elegir proveedor de correo transaccional para enviar la verificación/recuperación (Neon Auth
       con Email OTP integrado, sin requerir SMTP propio).
-- [x] Redactar `docs/tdd/TDD-AUTH-H1.md` con el modelo de dominio `User` para Prisma, el mecanismo
+- [x] Redactar el documento de diseño de autenticación con el modelo de dominio `User` para Prisma, el mecanismo
       elegido y el flujo de verificación/recuperación.
 - [x] Confirmar los roles (alumno, jefe departamental, administrador) y la regla de validación de dominios
       permitidos contra lo ya implementado en HU-01/HU-02.
@@ -50,7 +49,7 @@ de verdad y pertenezca a quien se registra. El mecanismo de verificación de esa
 
 - No reabrir la discusión SSO vs. contraseña — ya está cerrada (ver Contexto).
 - No escribir código en backend ni frontend hasta que el mecanismo de verificación esté acordado
-  en el TDD.
+  en el documento de diseño.
 - No solicitar permisos ni accesos a autoridades de la facultad para Azure AD — se intentó y no
   hubo respuesta; no es parte de esta tarea insistir por esa vía.
 
@@ -59,10 +58,10 @@ de verdad y pertenezca a quien se registra. El mecanismo de verificación de esa
 ## 5. Criterios de Aceptación
 
 1. [x] Se decidió el mecanismo de verificación de titularidad de la casilla: Email OTP vía Neon Auth.
-2. [x] Se redactó y aprobó `docs/tdd/TDD-AUTH-H1.md` (Estado: Aprobado).
+2. [x] Se redactó y aprobó el documento de diseño de autenticación.
 3. [x] Se confirmaron los roles (alumno, jefe departamental, administrador) contra HU-01/HU-02;
    las historias/tareas de implementación derivadas (backend/frontend) quedan a cargo de quien
-   tome TDD-AUTH-H1.md como referencia para implementar.
+   tome este resultado como referencia para implementar.
 
 ---
 
@@ -74,6 +73,5 @@ Neon Auth** — se descartó magic link por el riesgo de que Safe Links de Micro
 token antes de que el usuario lo abra. Neon Auth cubre el envío de los mails sin necesidad de
 contratar un proveedor de correo transaccional aparte (Resend u otro).
 
-El diseño completo (modelo de dominio, contrato de API, flujo de alta y verificación) queda en
-`docs/tdd/TDD-AUTH-H1.md`, Aprobado. Implementación de backend/frontend queda como trabajo
-siguiente, a partir de ese TDD.
+El documento de diseño que se redactó en esta tarea se retiró (2026-11-08). Los contratos de API
+y los errores de auth pasan a `packages/shared` (TASK-014); las reglas pendientes, a TASK-007.

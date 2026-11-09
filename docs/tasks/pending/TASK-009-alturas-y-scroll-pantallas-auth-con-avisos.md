@@ -44,4 +44,7 @@ Con avisos eso no se cumple, así que hay que decidir el comportamiento.
 
 ## 6. Resultado
 
-Pendiente.
+Decisión para el login (tomada en TASK-012, 2026-11-08): **scroll de la página completa**. La
+página crece con el aviso y el foco va al aviso al aparecer. En desktop la ilustración y el
+horizonte siguen anclados al alto de la ventana. Crear cuenta (TASK-013) usa la misma decisión.
+Falta: ajustar los artboards.

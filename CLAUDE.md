@@ -1,18 +1,21 @@
 # CLAUDE.md
 
-Monorepo npm workspaces: NestJS (back/) + Next.js/React (front/) + PostgreSQL vía Prisma.
+Monorepo npm workspaces: NestJS (apps/api/) + Next.js/React (apps/web/) + contratos compartidos
+(packages/shared) + PostgreSQL vía Prisma.
 Stack completo, metodología, roles y áreas sensibles: ver [AGENTS.md](./AGENTS.md) y
 [.agents/OVERVIEW.md](./.agents/OVERVIEW.md).
 
 ## Verificación
-- Backend: `npm test --workspace=back` (Vitest).
-- Frontend: sin test runner propio todavía — verificar a mano con `npm run dev:front`.
+- Backend: `npm test --workspace=@cloud-grupo-22/api` (Vitest).
+- Contratos compartidos: `npm test --workspace=@cloud-grupo-22/shared` (Vitest).
+- Frontend: sin test runner propio todavía — verificar a mano con `npm run dev:web`.
   No agregues tests de front sin que una tarea lo pida.
 - Build completo: `npm run build`.
 
 ## Reglas que valen siempre
-- Gate de tarea: no se implementa sin una tarea en `docs/tasks/`, y sin el TDD en
-  `docs/tdd/` correspondiente si hay una decisión de diseño no trivial.
+- Gate de tarea: no se implementa sin una tarea en `docs/tasks/`. Las decisiones no triviales
+  (arquitectura, dependencia nueva, contrato) se escriben en la sección "Decisiones" de esa tarea
+  antes de implementar. Dónde se registra cada cosa: [CONTRIBUTING.md](./CONTRIBUTING.md#decisiones-dónde-se-registra-cada-cosa).
 - Áreas sensibles (layout global, router principal, auth, hooks compartidos, estilos
   base, componentes reutilizables globales): no se tocan sin autorización explícita.
 - Commits, branching, push, PR y merge: seguir

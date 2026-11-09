@@ -1,8 +1,8 @@
 # TASK-006: Pantalla de login de Aula Clara UTN
 
-Estado: En progreso (pendiente de validación manual del desarrollador)
+Estado: Terminada (2026-11-09; validación manual del desarrollador aprobada)
 Fecha: 2026-10-20
-TDD relacionado: [TDD-AUTH-H1](../../tdd/TDD-AUTH-H1.md) — solo como contexto; esta tarea no implementa autenticación.
+Contexto de producto: HU-01 y [TASK-004](../finished/TASK-004-investigar-autenticacion-institucional.md). Las reglas de auth (respuestas y errores) pasan a los contratos de `packages/shared` ([TASK-014](../finished/TASK-014-contratos-compartidos-y-catalogo-de-errores.md)). Esta tarea no implementa autenticación.
 
 ## 1. Contexto y Objetivo
 
@@ -12,7 +12,7 @@ Implementar la pantalla de login (estado por defecto) a partir del diseño "Aula
 
 ## 2. Alcance
 
-- Tokens nuevos en `front/src/app/globals.css`: `--input-bg`, `--surface-illustration`,
+- Tokens nuevos en `apps/web/src/app/globals.css`: `--input-bg`, `--surface-illustration`,
   `--horizon-line`, `--horizon-ratio-offset`, `--glass-bg`, `--glass-blur`, `--glass-border`.
 - Tema oscuro por `[data-theme="dark"]` y, sin elección manual, por `prefers-color-scheme: dark`.
 - Regla del sistema: inputs de texto en oscuro usan `surface-100` (un paso más oscuro que la tarjeta).
@@ -25,7 +25,7 @@ Implementar la pantalla de login (estado por defecto) a partir del diseño "Aula
 - Ruta `/login` con layout de dos columnas en desktop (≥ 1024 px), tarjeta de vidrio sobre la
   ilustración en tablet (768–1023 px) y mobile (< 768 px).
 - Continuación del horizonte de la ilustración en desktop, solo con CSS.
-- Ilustraciones `facultad-dia` y `facultad-noche` en `front/public/img/login/` (JPG original +
+- Ilustraciones `facultad-dia` y `facultad-noche` en `apps/web/public/img/login/` (JPG original +
   WebP 2528 px y 1280 px) servidas con `<picture>`/`srcset`.
 
 ## 3. Exclusiones
@@ -47,18 +47,20 @@ Implementar la pantalla de login (estado por defecto) a partir del diseño "Aula
 - [x] Objetivos táctiles ≥ 44 px en tablet y mobile; inputs a 16 px por debajo de desktop.
 - [x] El submit no recarga la página.
 - [x] El tema elegido persiste al recargar (localStorage, con try/catch).
-- [ ] Validación manual del desarrollador: teclado solo y zoom al 200 % (checklist de
+- [x] Validación manual del desarrollador: teclado solo y zoom al 200 % (checklist de
       `docs/standards/frontend-design-system.md`).
 
 ## 5. Validaciones
 
-- [x] `tsc --noEmit` en `front/` sin errores.
-- [x] `npm test --workspace=back` pasa.
+- [x] `tsc --noEmit` en `apps/web/` sin errores.
+- [x] `npm test --workspace=@cloud-grupo-22/api` pasa.
 - [x] `next build` del front compila (verificado con las fuentes servidas localmente: el entorno
       de verificación no tenía salida a Google Fonts).
 - [x] Capturas de los 6 estados de referencia y barrido de anchos de desktop con Chromium headless.
 
 ## 6. Resultado
 
-Pendiente de la validación manual. Al aprobarse: mover a `finished/`, registrar en `CHANGELOG.md`
-y aplicar `commit-work`.
+Terminada el 2026-11-09. `/login` implementado según los 6 artboards (3 anchos × día y noche),
+con los componentes del Design System y la estructura compartida de `_auth/`. Validación manual
+del desarrollador aprobada (teclado solo y zoom al 200 %). La autenticación real sigue pendiente
+(`TODO(auth)`).
